@@ -2,8 +2,9 @@ import { ApolloProvider } from '@apollo/client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 import App from './App';
-import GlobalStyles from './GlobalStyles';
+import GlobalStyles, { theme } from './GlobalStyles';
 import apolloClient from './graphql/client';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
@@ -13,7 +14,9 @@ ReactDOM.render(
           <ApolloProvider client={apolloClient}>
                <Provider store={store}>
                     <GlobalStyles />
-                    <App />
+                    <ThemeProvider theme={theme}>
+                         <App />
+                    </ThemeProvider>
                </Provider>
           </ApolloProvider>
      </React.StrictMode>,

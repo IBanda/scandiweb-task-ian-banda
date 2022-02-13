@@ -21,3 +21,10 @@ export const removeFromCart = (productId: string) => ({
           productId,
      },
 });
+
+export const changeCategory = (category: string) => ({
+     type: actionTypes.categoryChange,
+     payload: {
+          category,
+     },
+});

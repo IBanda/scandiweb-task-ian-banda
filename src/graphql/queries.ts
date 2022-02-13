@@ -7,3 +7,12 @@ export const GET_CATEGORIES = gql`
           }
      }
 `;
+
+export const GET_CURRENCIES = gql`
+     query GetCurrencies {
+          currencies {
+               label
+               symbol
+          }
+     }
+`;

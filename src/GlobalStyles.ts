@@ -25,11 +25,11 @@ const GlobalStyles = createGlobalStyle`
         }
         @media (max-width:1280px){
             max-width: 1280px;
-            padding:0 3rem ;
+            padding:0 4rem ;
         }
         @media (max-width:1536px){
             max-width: 1536px;
-            padding: 0 5rem;
+            padding: 0 6rem;
         }
 
     }
@@ -41,7 +41,7 @@ export type Theme = {
 };
 
 export const theme: Theme = {
-     primary: '#00db70',
+     primary: '#5ECE7B',
 };
 
 export default GlobalStyles;

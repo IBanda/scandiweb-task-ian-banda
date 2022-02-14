@@ -1,4 +1,4 @@
-import { Product } from '../utils/interfaces';
+import { Currency, Product } from '../utils/interfaces';
 import actionTypes from './actionTypes';
 
 export const addToCart = (product: Product) => ({
@@ -23,8 +23,15 @@ export const removeFromCart = (productId: string) => ({
 });
 
 export const changeCategory = (category: string) => ({
-     type: actionTypes.categoryChange,
+     type: actionTypes.changeCategory,
      payload: {
           category,
+     },
+});
+
+export const changeCurrency = (currency: Currency) => ({
+     type: actionTypes.changeCurrency,
+     payload: {
+          currency,
      },
 });

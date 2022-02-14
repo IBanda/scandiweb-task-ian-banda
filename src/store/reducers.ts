@@ -14,8 +14,22 @@ function cartReducer(state = initialState, action: AnyAction) {
 
 function categoryReducer(state = 'all', action: AnyAction) {
      switch (action.type) {
-          case actionTypes.categoryChange:
+          case actionTypes.changeCategory:
                return action.payload.category;
+          default:
+               return state;
+     }
+}
+
+const initialCurrency = {
+     label: 'USD',
+     symbol: '$',
+};
+
+function currencyReducer(state = initialCurrency, action: AnyAction) {
+     switch (action.type) {
+          case actionTypes.changeCurrency:
+               return action.payload.currency;
           default:
                return state;
      }
@@ -24,6 +38,7 @@ function categoryReducer(state = 'all', action: AnyAction) {
 const rootReducer = {
      cart: cartReducer,
      category: categoryReducer,
+     currency: currencyReducer,
 };
 
 export default rootReducer;

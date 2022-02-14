@@ -111,7 +111,7 @@ class ProductCard extends Component<Props> {
           );
           return (
                <StyledDiv className="product_card">
-                    <Link className="product_link" to={`/products/${id}`}>
+                    <Link className="product_link" to={`/product/${id}`}>
                          <div className="product_card_body">
                               <div className={`product_card_img `}>
                                    <img src={gallery[0]} alt="product" />
@@ -127,7 +127,6 @@ class ProductCard extends Component<Props> {
                                              className="btn_add_to_cart"
                                              onClick={(e) => {
                                                   e.preventDefault();
-                                                  console.log('hello');
                                              }}
                                         >
                                              <CartIcon />

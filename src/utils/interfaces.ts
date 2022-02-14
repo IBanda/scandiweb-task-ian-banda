@@ -33,7 +33,7 @@ interface Category {
      products: Product[];
 }
 
-interface Currency {
+export interface Currency {
      label: string;
      symbol: string;
 }

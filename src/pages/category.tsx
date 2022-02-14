@@ -11,6 +11,7 @@ const StyledDiv = styled.div`
           font-weight: 300;
           text-transform: capitalize;
           margin-bottom: 2em;
+          font-size: 42px;
      }
      .grid {
           display: grid;

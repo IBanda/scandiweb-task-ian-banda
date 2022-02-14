@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { graphql, ChildDataProps } from '@apollo/client/react/hoc';
 import { GET_CURRENCIES } from '../graphql/queries';
 import { LineAngleDownIcon, LineAngleUpIcon } from './Icon';
+import { connect } from 'react-redux';
+import { changeCurrency } from '../store/actions';
 
 type Currency = {
      label: string;
@@ -22,9 +24,13 @@ const StyledDiv = styled.div`
           border: none;
           &.currency_dropdown_btn {
                padding-left: 1em;
+               padding-right: 0;
+               width: 40px;
                svg {
-                    margin-top: 4px;
-                    width: 7px;
+                    margin-top: 3px;
+                    width: 6px;
+                    height: 7px;
+                    pointer-events: none;
                }
           }
           &.listitem_btn {
@@ -60,8 +66,12 @@ const StyledDiv = styled.div`
 `;
 
 type childDataProps = ChildDataProps<{}, Response>;
+type Props = {
+     currency: Currency;
+     changeCurrency: Function;
+};
 
-class CurrencySwitcher extends Component<childDataProps, { isOpen: boolean }> {
+class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boolean }> {
      state = {
           isOpen: false,
      };
@@ -85,6 +95,8 @@ class CurrencySwitcher extends Component<childDataProps, { isOpen: boolean }> {
      render() {
           const {
                data: { currencies },
+               currency,
+               changeCurrency: onChangeCurrency,
           } = this.props;
           return (
                <StyledDiv id="currency_dropdown">
@@ -96,23 +108,28 @@ class CurrencySwitcher extends Component<childDataProps, { isOpen: boolean }> {
                               }))
                          }
                     >
-                         <div className="currency_symbol">$</div>
+                         <div className="currency_symbol">{currency.symbol}</div>
                          {this.state.isOpen ? <LineAngleUpIcon /> : <LineAngleDownIcon />}
                     </button>
 
                     {this.state.isOpen ? (
                          <ul className="dropdown_list" role={'listbox'}>
-                              {currencies?.map((currency) => (
+                              {currencies?.map((currencyItem) => (
                                    <li
-                                        key={currency.symbol}
+                                        key={currencyItem.symbol}
                                         aria-selected={false}
                                         role="option"
                                    >
-                                        <button className="listitem_btn">
+                                        <button
+                                             onClick={() =>
+                                                  onChangeCurrency(currencyItem)
+                                             }
+                                             className="listitem_btn"
+                                        >
                                              <div className="currency_symbol">
-                                                  {currency.symbol}
+                                                  {currencyItem.symbol}
                                              </div>
-                                             <div>{currency.label}</div>
+                                             <div>{currencyItem.label}</div>
                                         </button>
                                    </li>
                               ))}
@@ -123,6 +140,15 @@ class CurrencySwitcher extends Component<childDataProps, { isOpen: boolean }> {
      }
 }
 
-export default graphql<{}, Response, {}, childDataProps>(GET_CURRENCIES)(
-     CurrencySwitcher
+type rootState = {
+     currency: Currency;
+};
+const mapStateToProps = (state: rootState) => ({
+     currency: state.currency,
+});
+
+const ConnectedComponent = connect(mapStateToProps, { changeCurrency })(CurrencySwitcher);
+
+export default graphql<{}, Response, {}, childDataProps & Props>(GET_CURRENCIES)(
+     ConnectedComponent
 );

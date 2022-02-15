@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Cart from './Cart';
 import CurrencySwitcher from './CurrencySwitcher';
@@ -22,7 +23,9 @@ export default class Header extends Component {
                <StyledHeader>
                     <Nav />
                     <div>
-                         <img src="/logo.png" width={30} height={30} alt="logo" />
+                         <Link to="/">
+                              <img src="/logo.png" width={30} height={28} alt="logo" />
+                         </Link>
                     </div>
                     <div className="right-col">
                          <CurrencySwitcher />

@@ -82,8 +82,8 @@ const mapStateToProps = (state: rootState) => ({
      category: state.category,
 });
 
-const GraphqlComponent = graphql<InputProps, Response, Variables, childDateProps & Props>(
-     GET_CATEGORY
-)(CategoryPage);
+const WrappedReduxComponent = connect(mapStateToProps)(CategoryPage);
 
-export default connect(mapStateToProps)(GraphqlComponent);
+export default graphql<InputProps, Response, Variables, childDateProps & Props>(
+     GET_CATEGORY
+)(WrappedReduxComponent);

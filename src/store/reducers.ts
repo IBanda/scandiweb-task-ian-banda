@@ -7,6 +7,16 @@ const initialState = {
 
 function cartReducer(state = initialState, action: AnyAction) {
      switch (action.type) {
+          case actionTypes.addToCart:
+               return {
+                    cart: [
+                         ...state.cart,
+                         {
+                              product: action.payload.product,
+                              variant: action.payload.variant,
+                         },
+                    ],
+               };
           default:
                return state;
      }

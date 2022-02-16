@@ -15,7 +15,7 @@ interface Price {
      amount: number;
 }
 
-interface Attribute {
+export interface Attribute {
      displayValue: string;
      value: string;
      id: string;
@@ -37,3 +37,7 @@ export interface Currency {
      label: string;
      symbol: string;
 }
+
+export type Variant = {
+     [attributeName: string]: Attribute;
+};

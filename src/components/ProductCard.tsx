@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
                padding: 1em;
                cursor: pointer;
                &:hover {
-                    box-shadow: 0px 4px 8px 5px rgba(0, 0, 0, 0.04);
+                    box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
                     .btn_add_to_cart {
                          display: block !important;
                     }
@@ -29,6 +29,7 @@ const StyledDiv = styled.div`
                position: relative;
                img {
                     width: 100%;
+
                     height: 100%;
                     position: absolute;
                     object-fit: cover;
@@ -103,7 +104,7 @@ type Props = {
 class ProductCard extends Component<Props> {
      render() {
           const {
-               product: { id, name, inStock, prices, gallery },
+               product: { id, name, inStock, prices, gallery, brand },
                currency,
           } = this.props;
           const currentPrice = prices.find(
@@ -132,7 +133,9 @@ class ProductCard extends Component<Props> {
                                              <CartIcon />
                                         </button>
                                    ) : null}
-                                   <h3>{name}</h3>
+                                   <h3>
+                                        {brand} {name}
+                                   </h3>
                                    <h4>
                                         {currentPrice
                                              ? currentPrice.currency.symbol

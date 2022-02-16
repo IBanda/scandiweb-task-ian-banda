@@ -2,10 +2,10 @@ export interface Product {
      id: string;
      name: string;
      inStock: boolean;
-     gallery: string;
+     gallery: string[];
      description: string;
      category: string;
-     attributes: [AttributeSet];
+     attributes: AttributeSet[];
      prices: Price[];
      brand: string;
 }

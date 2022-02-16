@@ -12,15 +12,15 @@ const StyledApp = styled.div`
 class App extends React.Component {
      render() {
           return (
-               <StyledApp className="container">
-                    <Header />
-                    <Router>
+               <Router>
+                    <StyledApp className="container">
+                         <Header />
                          <Switch>
                               <Route component={CategoryPage} path="/" exact />
                               <Route component={ProductPage} path="/product/:id" exact />
                          </Switch>
-                    </Router>
-               </StyledApp>
+                    </StyledApp>
+               </Router>
           );
      }
 }

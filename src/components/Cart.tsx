@@ -5,7 +5,7 @@ import { CartIcon } from './Icon';
 const StyledDiv = styled.div`
      svg {
           margin-top: 3px;
-          width: 28px;
+          width: 30px;
           height: 28px;
      }
 `;

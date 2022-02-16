@@ -23,19 +23,23 @@ const StyledDiv = styled.div`
           cursor: pointer;
           border: none;
           &.currency_dropdown_btn {
-               padding-left: 1em;
+               padding-left: 1.5em;
                padding-right: 0;
-               width: 40px;
+               width: 57px;
+               position: relative;
+               margin-right: 2px;
                svg {
                     margin-top: 3px;
-                    width: 6px;
-                    height: 7px;
+                    width: 7px;
+                    height: 3px;
                     pointer-events: none;
+                    position: absolute;
+                    right: 11px;
                }
           }
           &.listitem_btn {
                font-size: 13px;
-               padding: 0.1em 1em;
+               padding: 0.1em 1.5em;
                width: 100%;
           }
      }
@@ -45,9 +49,10 @@ const StyledDiv = styled.div`
           list-style: none;
           padding: 0;
           margin: 0;
-          width: 90px;
+          width: 114px;
           padding: 1em 0;
-          box-shadow: 1px 1px 9px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+
           display: flex;
           flex-direction: column;
           align-items: stretch;
@@ -58,10 +63,16 @@ const StyledDiv = styled.div`
                }
           }
      }
-     .currency_symbol {
-          margin-right: 5px;
-          font-weight: 500;
-          font-size: 13px;
+     .currency {
+          &_symbol {
+               margin-right: 5px;
+               font-weight: 500;
+               font-size: 15px;
+          }
+          &_label {
+               font-size: 15px;
+               font-weight: 500;
+          }
      }
 `;
 
@@ -129,7 +140,9 @@ class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boole
                                              <div className="currency_symbol">
                                                   {currencyItem.symbol}
                                              </div>
-                                             <div>{currencyItem.label}</div>
+                                             <div className="currency_label">
+                                                  {currencyItem.label}
+                                             </div>
                                         </button>
                                    </li>
                               ))}

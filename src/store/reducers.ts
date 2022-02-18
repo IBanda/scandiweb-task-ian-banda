@@ -1,22 +1,14 @@
 import type { AnyAction } from 'redux';
 import actionTypes from './actionTypes';
+import { SelectedProduct } from '../utils/interfaces';
 
-const initialState = {
-     cart: [],
-};
+const initialState: SelectedProduct[] = [];
 
 function cartReducer(state = initialState, action: AnyAction) {
      switch (action.type) {
           case actionTypes.addToCart:
-               return {
-                    cart: [
-                         ...state.cart,
-                         {
-                              product: action.payload.product,
-                              variant: action.payload.variant,
-                         },
-                    ],
-               };
+               console.log(action.payload.selectedProduct);
+               return [...state, action.payload.selectedProduct];
           default:
                return state;
      }

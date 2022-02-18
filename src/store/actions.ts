@@ -1,11 +1,10 @@
-import { Currency, Product, Variant } from '../utils/interfaces';
+import { Currency, Product, SelectedProduct } from '../utils/interfaces';
 import actionTypes from './actionTypes';
 
-export const addToCart = (product: Product, variant: Variant) => ({
+export const addToCart = (selectedProduct: SelectedProduct) => ({
      type: actionTypes.addToCart,
      payload: {
-          product,
-          variant,
+          selectedProduct,
      },
 });
 

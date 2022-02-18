@@ -45,12 +45,14 @@ const StyledDiv = styled.div`
      }
      ul.dropdown_list {
           position: absolute;
+          z-index: 3;
           top: 1.5em;
           list-style: none;
           padding: 0;
           margin: 0;
           width: 114px;
           padding: 1em 0;
+          background-color: #fff;
           box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 
           display: flex;

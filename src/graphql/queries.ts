@@ -20,6 +20,7 @@ export const GET_CURRENCIES = gql`
 export const GET_CATEGORY = gql`
      query GetCategory($input: CategoryInput) {
           category(input: $input) {
+               name
                products {
                     id
                     name
@@ -31,6 +32,16 @@ export const GET_CATEGORY = gql`
                               symbol
                          }
                          amount
+                    }
+                    attributes {
+                         id
+                         name
+                         type
+                         items {
+                              id
+                              displayValue
+                              value
+                         }
                     }
                }
           }

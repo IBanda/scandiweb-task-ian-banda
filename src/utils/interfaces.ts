@@ -10,7 +10,7 @@ export interface Product {
      brand: string;
 }
 
-interface Price {
+export interface Price {
      currency: Currency;
      amount: number;
 }
@@ -21,7 +21,7 @@ export interface Attribute {
      id: string;
 }
 
-interface AttributeSet {
+export interface AttributeSet {
      id: string;
      name: string;
      type: string;
@@ -41,3 +41,5 @@ export interface Currency {
 export type Variant = {
      [attributeName: string]: Attribute;
 };
+
+export type SelectedProduct = Product & { quantity: number; variant: Variant };

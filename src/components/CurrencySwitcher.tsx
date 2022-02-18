@@ -27,7 +27,7 @@ const StyledDiv = styled.div`
                padding-right: 0;
                width: 57px;
                position: relative;
-               margin-right: 2px;
+
                svg {
                     margin-top: 3px;
                     width: 7px;

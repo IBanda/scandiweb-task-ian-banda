@@ -1,12 +1,18 @@
-import { Component } from 'react';
+import { Component, SyntheticEvent } from 'react';
 import styled from 'styled-components';
-import { Currency, Product } from '../utils/interfaces';
+import { Currency, Product, Variant } from '../utils/interfaces';
 import { connect } from 'react-redux';
 import { CartIcon } from './Icon';
 import { Link } from 'react-router-dom';
+import getPrice from '../utils/getPrice';
+import { addToCart } from '../store/actions';
+import getSelectedVariant from '../utils/getSelectedVariant';
 
 const StyledDiv = styled.div`
      .product {
+          &_card {
+               background-color: #fff;
+          }
           &_link {
                text-decoration: none;
                color: #000;
@@ -19,8 +25,12 @@ const StyledDiv = styled.div`
                &:hover {
                     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
                     .btn_add_to_cart {
-                         display: block !important;
+                         display: block;
                     }
+               }
+               @media (max-width: 1024px) {
+                    width: 100%;
+                    height: 407px;
                }
           }
           &_card_img {
@@ -29,7 +39,6 @@ const StyledDiv = styled.div`
                position: relative;
                img {
                     width: 100%;
-
                     height: 100%;
                     position: absolute;
                     object-fit: cover;
@@ -50,6 +59,9 @@ const StyledDiv = styled.div`
                     top: 0;
                     width: 100%;
                     height: 100%;
+               }
+               @media (max-width: 1024px) {
+                    width: 100%;
                }
           }
 
@@ -99,17 +111,39 @@ const StyledDiv = styled.div`
 type Props = {
      product: Product;
      currency: Currency;
+     addToCart: Function;
 };
 
-class ProductCard extends Component<Props> {
+type State = {
+     selectedVariant: Variant;
+};
+
+class ProductCard extends Component<Props, State> {
+     state = {
+          selectedVariant: {},
+     };
+
+     onAddToCart = (e: SyntheticEvent<HTMLButtonElement>) => {
+          e.preventDefault();
+          this.props.addToCart({
+               ...this.props.product,
+               variant: this.state.selectedVariant,
+               quantity: 1,
+          });
+     };
+
+     componentDidMount() {
+          this.setState({
+               selectedVariant: getSelectedVariant(this.props.product),
+          });
+     }
+
      render() {
           const {
                product: { id, name, inStock, prices, gallery, brand },
                currency,
           } = this.props;
-          const currentPrice = prices.find(
-               (price) => price.currency.symbol === currency.symbol
-          );
+          const currentPrice = getPrice(prices, currency.symbol);
           return (
                <StyledDiv className="product_card">
                     <Link className="product_link" to={`/product/${id}`}>
@@ -126,9 +160,7 @@ class ProductCard extends Component<Props> {
                                    {inStock ? (
                                         <button
                                              className="btn_add_to_cart"
-                                             onClick={(e) => {
-                                                  e.preventDefault();
-                                             }}
+                                             onClick={this.onAddToCart}
                                         >
                                              <CartIcon />
                                         </button>
@@ -158,4 +190,4 @@ const mapStateToProps = (state: rootState) => ({
      currency: state.currency,
 });
 
-export default connect(mapStateToProps)(ProductCard);
+export default connect(mapStateToProps, { addToCart })(ProductCard);

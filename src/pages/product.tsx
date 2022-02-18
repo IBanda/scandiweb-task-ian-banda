@@ -2,11 +2,194 @@ import { ChildDataProps, graphql } from '@apollo/client/react/hoc';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { GET_PRODUCT } from '../graphql/queries';
-import { Currency, Product } from '../utils/interfaces';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { GET_PRODUCT } from '../graphql/queries';
+import { Attribute as Attr, Currency, Product, Variant } from '../utils/interfaces';
+import { addToCart } from '../store/actions';
+import Attribute from '../components/Attribute';
+import getPrice from '../utils/getPrice';
+import getSelectedVariant from '../utils/getSelectedVariant';
 
-const StyledDiv = styled.div``;
+const StyledDiv = styled.div`
+     display: grid;
+     grid-template-columns: 3.5fr 2fr;
+     gap: 2em;
+
+     @media (max-width: 1024px) {
+          grid-template-columns: 1fr;
+     }
+     .product {
+          &_imgs {
+               height: 550px;
+               overflow: hidden;
+               display: flex;
+               /* grid-template-columns: 100px 1fr; */
+               gap: 2em;
+               position: sticky;
+               top: 0;
+               @media (max-width: 640px) {
+                    flex-direction: column;
+               }
+
+               .thumbnail {
+                    width: 90px;
+                    height: 90px;
+                    object-fit: cover;
+                    margin-bottom: 1em;
+                    cursor: pointer;
+                    &:last-child {
+                         margin-bottom: 0;
+                    }
+                    &:focus {
+                         outline: none;
+                    }
+               }
+               .product_img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+               }
+          }
+          &_thumbnails {
+               height: inherit;
+               overflow-y: auto;
+               width: 100px;
+               @media (max-width: 640px) {
+                    order: 1;
+                    display: flex;
+                    height: 120px;
+                    width: 100%;
+                    gap: 1em;
+                    overflow-y: unset;
+                    overflow-x: scroll;
+               }
+          }
+          &_main_img {
+               height: 550px;
+               width: 100%;
+               @media (max-width: 640px) {
+                    height: calc(100% - 150px);
+               }
+          }
+          &_details {
+               padding: 0 5em 0 3em;
+               @media (max-width: 640px) {
+                    padding: 0 1em;
+               }
+               .sticky_details {
+                    position: sticky;
+                    top: 0;
+                    background-color: #fff;
+                    padding-bottom: 0.5em;
+               }
+               .product {
+                    &_brand,
+                    &_name {
+                         font-size: 30px;
+                    }
+                    &_brand {
+                         font-weight: 500;
+                         margin-bottom: 10px;
+                    }
+                    &_name {
+                         font-weight: 300;
+                         margin: 0;
+                         margin-bottom: 1em;
+                    }
+                    &_attributes {
+                         .attr_name {
+                              font-size: 16px;
+                              font-weight: 600;
+                              font-family: 'Roboto Condensed';
+                              text-transform: uppercase;
+                              margin-bottom: 7px;
+                         }
+
+                         .attr_box_container {
+                              display: flex;
+                              gap: 0.5em;
+                         }
+                         .attr_box {
+                              height: 45px;
+                              width: 63px;
+                              border: 1px solid #1d1f22;
+                              font-size: 14px;
+                              text-align: center;
+                              font-family: 'Source Sans Pro', sans-serif;
+                              font-weight: 400;
+                              position: relative;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              .attr_btn {
+                                   position: absolute;
+                                   top: 0;
+                                   left: 0;
+                                   margin: 0;
+                                   opacity: 0;
+                                   height: 100%;
+                                   width: 100%;
+                                   z-index: 1;
+                                   cursor: pointer;
+                              }
+                              &.selected {
+                                   background-color: #1d1f22;
+                                   color: #fff;
+                              }
+                              &.swatch_box.selected {
+                                   outline: 3px double #1d1f22;
+                                   border-color: transparent;
+                                   box-shadow: 0 0 0 0.1rem #ccc;
+                              }
+                         }
+                    }
+                    &_price {
+                         margin-top: 2em;
+                         .price_label {
+                              font-family: 'Roboto Condensed';
+                              text-transform: uppercase;
+                              font-weight: 700;
+                              font-size: 16px;
+                              margin-bottom: 10px;
+                         }
+                         .price {
+                              margin: 0;
+                              font-weight: 700;
+                              font-size: 20px;
+                         }
+                    }
+               }
+               .add_to_cart_btn {
+                    height: 52px;
+                    width: 100%;
+                    color: #fff;
+                    background-color: ${(props) => props.theme.primary};
+                    border: none;
+                    text-transform: uppercase;
+                    font-size: 16px;
+                    font-weight: 500;
+                    margin: 2em 0;
+                    cursor: pointer;
+               }
+               .out_of_stock_msg {
+                    color: #8d8f9a;
+                    text-transform: uppercase;
+               }
+               .product_description {
+                    font-family: 'Roboto';
+                    font-weight: 300;
+                    font-size: 16px;
+
+                    h1 {
+                         font-size: 1.5em;
+                    }
+                    h2 {
+                         font-size: 1.25em;
+                    }
+               }
+          }
+     }
+`;
 
 type InputProp = {
      id: string;
@@ -24,11 +207,131 @@ type childDataProps = ChildDataProps<InputProp, Response, Variables>;
 
 type Props = {
      currency: Currency;
+     addToCart: Function;
 };
 
-class ProductPage extends Component<childDataProps & Props & RouteComponentProps> {
+type State = {
+     currentPreviewIndex: number;
+     selectedVariant: Variant;
+};
+
+class ProductPage extends Component<childDataProps & Props & RouteComponentProps, State> {
+     state = {
+          currentPreviewIndex: 0,
+          selectedVariant: {},
+     };
+
+     componentDidUpdate(prevProps: childDataProps) {
+          if (prevProps.data.product?.id != this.props.data.product?.id) {
+               const { product } = this.props.data;
+               this.setState({
+                    selectedVariant: getSelectedVariant(product),
+               });
+          }
+     }
+
+     isSelected = (attrName: string, id: string) => {
+          if (Object.keys(this.state.selectedVariant).length) {
+               return (this.state.selectedVariant as Variant)[attrName].id === id;
+          }
+     };
+
+     onVariantChange = (attrName: string, variant: Attr) => {
+          this.setState((prev) => ({
+               ...prev,
+               selectedVariant: {
+                    ...prev.selectedVariant,
+                    [attrName]: variant,
+               },
+          }));
+     };
+
+     onAddToCart = () => {
+          this.props.addToCart({
+               ...this.props.data.product,
+               variant: this.state.selectedVariant,
+               quantity: 1,
+          });
+     };
+
      render() {
-          return <StyledDiv></StyledDiv>;
+          const {
+               data: { product },
+               currency,
+          } = this.props;
+
+          const currentPrice = getPrice(product?.prices, currency.symbol);
+          const { currentPreviewIndex } = this.state;
+          return (
+               <StyledDiv>
+                    <div className="product_imgs">
+                         <div className="product_thumbnails">
+                              {product?.gallery.map((imgSrc, index) => (
+                                   <img
+                                        src={imgSrc}
+                                        key={imgSrc}
+                                        alt="product thumbnail"
+                                        className="thumbnail"
+                                        role={'button'}
+                                        tabIndex={0}
+                                        onClick={() =>
+                                             this.setState({ currentPreviewIndex: index })
+                                        }
+                                   />
+                              ))}
+                         </div>
+
+                         <div className="product_main_img">
+                              <img
+                                   src={product?.gallery[currentPreviewIndex]}
+                                   alt=""
+                                   className="product_img"
+                              />
+                         </div>
+                    </div>
+                    <div className="product_details">
+                         <div className="sticky_details">
+                              <h1 className="product_brand">{product?.brand}</h1>
+                              <h2 className="product_name">{product?.name}</h2>
+                              <div className="product_attributes">
+                                   {product?.attributes.map((attr) => (
+                                        <div key={attr.id}>
+                                             <h3 className="attr_name">{attr.name}:</h3>
+                                             <Attribute
+                                                  isSelected={this.isSelected}
+                                                  attribute={attr}
+                                                  onChange={this.onVariantChange}
+                                             />
+                                        </div>
+                                   ))}
+                              </div>
+                              <div className="product_price">
+                                   <h3 className="price_label">price:</h3>
+                                   <h4 className="price">
+                                        {currentPrice?.currency.symbol}
+                                        {currentPrice?.amount}
+                                   </h4>
+                              </div>
+                              {product?.inStock ? (
+                                   <button
+                                        onClick={this.onAddToCart}
+                                        className="add_to_cart_btn"
+                                   >
+                                        add to cart
+                                   </button>
+                              ) : (
+                                   <h4 className="out_of_stock_msg">out of stock</h4>
+                              )}
+                         </div>
+                         <div
+                              className="product_description"
+                              dangerouslySetInnerHTML={{
+                                   __html: product?.description as string,
+                              }}
+                         />
+                    </div>
+               </StyledDiv>
+          );
      }
 }
 
@@ -40,9 +343,11 @@ const mapStateToProps = (state: rootState) => ({
      currency: state.currency,
 });
 
-const ComponentWithRouting = withRouter(ProductPage);
+const WrappedRouterComponent = withRouter(ProductPage);
 
-const ConnectedComponent = connect(mapStateToProps)(ComponentWithRouting);
+const WrappedReduxComponent = connect(mapStateToProps, { addToCart })(
+     WrappedRouterComponent
+);
 
 type Params = {
      id: string;
@@ -59,4 +364,4 @@ export default graphql<
                id: (props.match.params as Params).id,
           },
      }),
-})(ConnectedComponent);
+})(WrappedReduxComponent);

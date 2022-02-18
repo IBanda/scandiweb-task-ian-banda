@@ -44,7 +44,7 @@ const StyledDiv = styled.div`
 type Props = {
      attribute: AttributeSet | undefined;
      isSelected: (attrName: string, itemId: string) => boolean | undefined;
-     onChange: Function;
+     onChange?: Function;
 };
 
 export default class Attribute extends Component<Props> {
@@ -78,9 +78,11 @@ export default class Attribute extends Component<Props> {
                          >
                               <button
                                    className="attr_btn"
-                                   onClick={() => onChange(attribute.name, item)}
+                                   onClick={() => onChange?.(attribute.name, item)}
                               />
-                              {isSwatch ? null : <span>{item.displayValue}</span>}
+                              {isSwatch ? null : (
+                                   <span className="attr_text">{item.displayValue}</span>
+                              )}
                          </div>
                     ))}
                </StyledDiv>

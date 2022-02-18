@@ -13,25 +13,35 @@ const GlobalStyles = createGlobalStyle`
     .container{
         padding: 1em;
         width: 100%;
-        @media (max-width:640px){
-            max-width: 640px;
-        }
-        @media (max-width:768px){
-            max-width: 768px;
-        }
-        @media (max-width:1024px){
-            max-width: 1024px;
-            padding: 0 2rem;
+        @media (max-width:1536px){
+            max-width: 1536px;
+            padding: 0 6rem;
         }
         @media (max-width:1280px){
             max-width: 1280px;
             padding:0 4rem ;
         }
-        @media (max-width:1536px){
-            max-width: 1536px;
-            padding: 0 6rem;
+        @media (max-width:1024px){
+            max-width: 1024px;
+            padding: 0 2rem;
+        }
+        @media (max-width:768px){
+            max-width: 768px;
+            
+        }
+        @media (max-width:640px){
+            max-width: 640px;
+            padding: 0 1rem;
         }
 
+    }
+     button {
+               cursor: pointer;
+          }
+
+    a{
+        text-decoration: none;
+        color:#000;
     }
 
 `;

@@ -47,8 +47,6 @@ export class CartIcon extends Component {
           return (
                <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="752pt"
-                    height="752pt"
                     version="1.1"
                     viewBox="0 0 752 752"
                >

@@ -34,7 +34,13 @@
                "react-app",
                "react-app/jest",
                "kentcdodds"
-          ]
+          ],
+          "rules": {
+               "import/order": 0,
+               "@typescript-eslint/no-unsafe-member-access": 0,
+               "@typescript-eslint/no-unsafe-argument": 0,
+               "@typescript-eslint/no-unnecessary-condition": 0
+          }
      },
      "browserslist": {
           "production": [

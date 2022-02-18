@@ -5,6 +5,8 @@ import Attribute from '../components/Attribute';
 import { Modal } from '../components/Modal';
 import getPrice from '../utils/getPrice';
 import { Currency, SelectedProduct } from '../utils/interfaces';
+import QuantityCTL from '../components/QuantityCTL';
+import { Link } from 'react-router-dom';
 
 const StyledDiv = styled.div`
      height: 100%;
@@ -69,26 +71,6 @@ const StyledDiv = styled.div`
                display: flex;
                position: sticky;
                top: 0;
-               .quantity {
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: space-between;
-                    margin-right: 1em;
-                    button {
-                         background-color: #fff;
-                         height: 45px;
-                         width: 45px;
-                         border: 1px solid #000;
-                         /* font-size: 23px; */
-                         font-weight: 200;
-                    }
-                    .text {
-                         font-size: 24px;
-                         font-weight: 400;
-                    }
-               }
                .product_img {
                     width: 141px;
                     height: 185px;
@@ -158,27 +140,33 @@ class CartPage extends Component<Props, State> {
      render() {
           const { cart, currency } = this.props;
           const { showModal, productForModal } = this.state;
-          console.log(this.props.cart);
           return (
                <StyledDiv>
                     <h1 className="page_title">cart</h1>
                     <div className="cart">
                          {cart.length ? (
                               <ul className="cart_items">
-                                   {cart.map((product) => {
+                                   {cart.map((product, index) => {
                                         const currentPrice = getPrice(
                                              product.prices,
                                              currency.symbol
                                         );
                                         return (
-                                             <li key={product.id} className="cart_item">
+                                             <li
+                                                  key={`${product.id}-${index}`}
+                                                  className="cart_item"
+                                             >
                                                   <div>
                                                        <div className="cart_item_left">
                                                             <h2 className="brand">
                                                                  {product.brand}
                                                             </h2>
                                                             <h3 className="name">
-                                                                 {product.name}
+                                                                 <Link
+                                                                      to={`/product/${product.id}`}
+                                                                 >
+                                                                      {product.name}
+                                                                 </Link>
                                                             </h3>
                                                             <h4 className="price">
                                                                  {
@@ -219,13 +207,9 @@ class CartPage extends Component<Props, State> {
                                                             </div>
                                                        </div>
                                                        <div className="cart_item_right">
-                                                            <div className="quantity">
-                                                                 <button>&#xff0b;</button>
-                                                                 <span className="text">
-                                                                      {product.quantity}
-                                                                 </span>
-                                                                 <button>&mdash;</button>
-                                                            </div>
+                                                            <QuantityCTL
+                                                                 product={product}
+                                                            />
                                                             <img
                                                                  className="product_img"
                                                                  src={product.gallery[0]}

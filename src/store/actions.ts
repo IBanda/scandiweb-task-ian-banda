@@ -8,17 +8,18 @@ export const addToCart = (selectedProduct: SelectedProduct) => ({
      },
 });
 
-export const updateCart = (product: Product) => ({
+export const updateCart = (product: Product, quantity: number) => ({
      type: actionTypes.updateCart,
      payload: {
           product,
+          quantity,
      },
 });
 
-export const removeFromCart = (productId: string) => ({
+export const removeFromCart = (product: SelectedProduct) => ({
      type: actionTypes.removeFromCart,
      payload: {
-          productId,
+          product,
      },
 });
 

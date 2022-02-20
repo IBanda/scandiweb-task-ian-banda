@@ -1,4 +1,4 @@
-import { Attribute, Product, Price, Variant } from './interfaces';
+import { Attribute, Product, Price, Variant, SelectedProduct } from './interfaces';
 
 export function getSelectedVariant(product: Product | undefined) {
      const selected: { [name: string]: Attribute } = {};
@@ -22,4 +22,12 @@ export function isSameVariant(variantA: Variant, variantB: Variant) {
           }
      });
      return isEqual;
+}
+
+export function isAttributedSelected(product: SelectedProduct) {
+     return (attrName: string, id: string) => {
+          if (Object.keys(product.variant).length) {
+               return product.variant[attrName].id === id;
+          }
+     };
 }

@@ -7,6 +7,7 @@ import { Currency, SelectedProduct } from '../utils/interfaces';
 import { Link } from 'react-router-dom';
 import { removeFromCart } from '../store/actions';
 import CartItem from '../components/CartItem';
+import { isAttributedSelected } from '../utils';
 
 const StyledDiv = styled.div`
      height: calc(100% - 4em - 80px);
@@ -80,11 +81,6 @@ class CartPage extends Component<Props, State> {
           showModal: false,
           productForModal: {} as SelectedProduct,
      };
-     isSelected = (product: SelectedProduct) => (attrName: string, id: string) => {
-          if (Object.keys(product.variant).length) {
-               return product.variant[attrName].id === id;
-          }
-     };
 
      onModalOpen = (prdct: SelectedProduct) => {
           this.setState({
@@ -145,7 +141,7 @@ class CartPage extends Component<Props, State> {
                                                   <Attribute
                                                        attribute={attr}
                                                        onChange={() => {}}
-                                                       isSelected={this.isSelected(
+                                                       isSelected={isAttributedSelected(
                                                             productForModal
                                                        )}
                                                   />

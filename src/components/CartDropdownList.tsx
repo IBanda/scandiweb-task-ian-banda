@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { getPrice } from '../utils';
+import { getPrice, isAttributedSelected } from '../utils';
 import { Currency, SelectedProduct } from '../utils/interfaces';
 import Attribute from './Attribute';
 import QuantityCTL from './QuantityCTL';
@@ -84,11 +84,6 @@ const StyledList = styled.ul`
 `;
 
 class CartDropdownList extends Component<Props> {
-     isSelected = (product: SelectedProduct) => (attrName: string, id: string) => {
-          if (Object.keys(product.variant).length) {
-               return product.variant[attrName].id === id;
-          }
-     };
      render() {
           const { cart, currency } = this.props;
           return (
@@ -121,7 +116,7 @@ class CartDropdownList extends Component<Props> {
 
                                         <Attribute
                                              attribute={product.attributes[0]}
-                                             isSelected={this.isSelected(product)}
+                                             isSelected={isAttributedSelected(product)}
                                         />
                                    </div>
                                    <div className="cart_right">

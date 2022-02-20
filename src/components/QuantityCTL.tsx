@@ -49,7 +49,9 @@ class QuantityCTL extends Component<Props> {
                     <button onClick={() => this.onCartUpdate('INC')}>&#xff0b;</button>
                     <span className="quantity_text">{product.quantity}</span>
 
-                    <button onClick={() => this.onCartUpdate('DEC')}>&mdash;</button>
+                    <button className="dd" onClick={() => this.onCartUpdate('DEC')}>
+                         &mdash;
+                    </button>
                </StyledDiv>
           );
      }

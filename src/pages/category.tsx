@@ -99,7 +99,6 @@ class CategoryPage extends Component<childDateProps & Props, State> {
                this.state.page * pageSize
           );
           const showPagination = products ? pageSize < products.length : false;
-
           return (
                <StyledDiv>
                     <h1 className="category_title">{category}</h1>
@@ -155,13 +154,19 @@ const mapStateToProps = (state: rootState) => ({
      category: state.category,
 });
 
-const WrappedReduxComponent = connect(mapStateToProps)(CategoryPage);
-
-export default graphql<InputProps, Response, Variables, childDateProps & Props>(
-     GET_CATEGORY,
-     {
-          options: {
-               fetchPolicy: 'cache-first',
+const WrappedGraphqlComponent = graphql<
+     InputProps & Props,
+     Response,
+     Variables,
+     childDateProps
+>(GET_CATEGORY, {
+     options: (props) => ({
+          variables: {
+               input: {
+                    title: props.category,
+               },
           },
-     }
-)(WrappedReduxComponent);
+     }),
+})(CategoryPage);
+
+export default connect(mapStateToProps)(WrappedGraphqlComponent);

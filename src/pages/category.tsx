@@ -6,6 +6,7 @@ import { Product } from '../utils/interfaces';
 import { GET_CATEGORY } from '../graphql/queries';
 import ProductCard from '../components/ProductCard';
 import { Loader } from '../components/Loader';
+import GraphqlErrorAlert from '../components/GraphqlErrorAlert';
 
 const StyledDiv = styled.div`
      h1.category_title {
@@ -85,10 +86,12 @@ class CategoryPage extends Component<childDateProps & Props, State> {
      render() {
           const {
                category,
-               data: { category: categoryData, loading },
+               data: { category: categoryData, loading, error },
           } = this.props;
 
           if (loading) return <Loader />;
+
+          if (error) return <GraphqlErrorAlert error={error} />;
 
           const products = categoryData?.products;
           const pageSize = 6;

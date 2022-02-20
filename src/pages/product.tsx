@@ -9,6 +9,7 @@ import { addToCart } from '../store/actions';
 import Attribute from '../components/Attribute';
 import { getPrice, getSelectedVariant } from '../utils';
 import { Loader } from '../components/Loader';
+import GraphqlErrorAlert from '../components/GraphqlErrorAlert';
 
 const StyledDiv = styled.div`
      display: grid;
@@ -227,12 +228,15 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
 
      render() {
           const {
-               data: { product, loading },
+               data: { product, loading, error },
                currency,
           } = this.props;
 
-          console.log(this.props.data.product);
           if (loading) return <Loader />;
+
+          if (error) {
+               return <GraphqlErrorAlert error={error} />;
+          }
 
           const currentPrice = getPrice(product?.prices, currency.symbol);
           const { currentPreviewIndex } = this.state;

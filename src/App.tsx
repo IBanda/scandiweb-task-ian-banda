@@ -6,6 +6,7 @@ import CategoryPage from './pages/category';
 import ProductPage from './pages/product';
 import CartPage from './pages/cart';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import NotFound from './components/404';
 
 const StyledApp = styled.div`
      margin-bottom: 2em;
@@ -26,6 +27,7 @@ class App extends React.Component {
                                         exact
                                    />
                                    <Route component={CartPage} path="/cart" exact />
+                                   <Route component={NotFound} path="*" />
                               </Switch>
                          </ErrorBoundary>
                     </StyledApp>

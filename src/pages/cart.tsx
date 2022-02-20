@@ -42,7 +42,7 @@ const StyledDiv = styled.div`
                }
                .price {
                     font-weight: 600;
-                    font-size: 20px;
+                    font-size: 16px;
                     margin: 20px 0 20px 0;
                }
                .attr_container {

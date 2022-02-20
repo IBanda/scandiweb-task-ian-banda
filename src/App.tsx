@@ -5,6 +5,7 @@ import Header from './components/Header';
 import CategoryPage from './pages/category';
 import ProductPage from './pages/product';
 import CartPage from './pages/cart';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 const StyledApp = styled.div`
      margin-bottom: 2em;
@@ -16,11 +17,17 @@ class App extends React.Component {
                <Router>
                     <Header />
                     <StyledApp className="container">
-                         <Switch>
-                              <Route component={CategoryPage} path="/" exact />
-                              <Route component={ProductPage} path="/product/:id" exact />
-                              <Route component={CartPage} path="/cart" exact />
-                         </Switch>
+                         <ErrorBoundary>
+                              <Switch>
+                                   <Route component={CategoryPage} path="/" exact />
+                                   <Route
+                                        component={ProductPage}
+                                        path="/product/:id"
+                                        exact
+                                   />
+                                   <Route component={CartPage} path="/cart" exact />
+                              </Switch>
+                         </ErrorBoundary>
                     </StyledApp>
                </Router>
           );

@@ -1,13 +1,12 @@
-import { Component, SyntheticEvent } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import getPrice from '../utils/getPrice';
 import { Currency, SelectedProduct } from '../utils/interfaces';
-import Attribute from './Attribute';
 import { CartIcon } from './Icon';
-import QuantityCTL from './QuantityCTL';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Modal } from './Modal';
+import CartDropdownList from './CartDropdownList';
 
 const StyledDiv = styled.div`
      cursor: pointer;
@@ -92,73 +91,10 @@ const StyledDiv = styled.div`
                     }
                }
           }
-     }
-     .cart_list {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          max-height: 250px;
-          overflow-y: auto;
-          .cart_item {
-               display: flex;
-               justify-content: space-between;
-               text-align: left;
-               height: 120px;
-               margin-bottom: 2em;
-               .cart_left {
-                    /* max-width: 50px; */
-                    overflow-x: auto;
-                    .brand,
-                    .name,
-                    .price {
-                         font-size: 14px;
-                         margin: 0 0 5px 0;
-                    }
-                    .name,
-                    .brand {
-                         font-weight: 300;
-                    }
-                    .name {
-                         margin-bottom: 10px;
-                    }
-                    .price {
-                         font-weight: 600;
-                         margin-bottom: 22.5px;
-                    }
-                    .attr_box {
-                         width: 33px;
-                         height: 33px;
-                         background-color: #fff;
-                         color: #000;
-
-                         &.selected {
-                              background-color: #eeeeee;
-                              color: #a6a6a6;
-                         }
-                         .attr_text {
-                              font-size: 10px;
-                              text-overflow: ellipsis;
-                              overflow: hidden;
-                         }
-                    }
-               }
-               .cart_right {
-                    display: flex;
-                    .quantity {
-                         button {
-                              width: 33px;
-                              height: 33px;
-                         }
-                         .quantity_text {
-                              font-size: 14px;
-                         }
-                    }
-                    .cart_img {
-                         width: 90px;
-                         height: 120px;
-                         object-fit: contain;
-                    }
-               }
+          .empty_cart_msg {
+               text-align: center;
+               font-size: 16px;
+               color: #8d8f9a;
           }
      }
 `;
@@ -172,17 +108,9 @@ type State = {
      isOverlayOpen: boolean;
 };
 
-class CartOverlay extends Component<Props, State> {
+class CartOverlay extends Component<Props & RouteComponentProps, State> {
      state = {
           isOverlayOpen: false,
-     };
-
-     onClick = (e: Event) => {
-          if (!(e.target as HTMLElement).closest('#cart_overlay')) {
-               this.setState({
-                    isOverlayOpen: false,
-               });
-          }
      };
 
      componentDidMount() {
@@ -193,18 +121,26 @@ class CartOverlay extends Component<Props, State> {
           window.removeEventListener('click', this.onClick);
      }
 
-     formatItemCountText = (count: number) => {
-          return `${count} item${count > 1 ? 's' : ''}`;
-     };
-     isSelected = (product: SelectedProduct) => (attrName: string, id: string) => {
-          if (Object.keys(product.variant).length) {
-               return product.variant[attrName].id === id;
+     componentDidUpdate(prevProps: RouteComponentProps) {
+          if (prevProps.location.pathname != this.props.location.pathname) {
+               this.setState({ isOverlayOpen: false });
+          }
+     }
+     onClick = (e: Event) => {
+          const ele = e.target as HTMLElement;
+          if (!(ele.closest('#cart_overlay') || ele.closest('.quantity'))) {
+               this.setState({
+                    isOverlayOpen: false,
+               });
           }
      };
 
-     onPageTransition = (e: SyntheticEvent) => {
-          e.preventDefault();
-          this.setState({ isOverlayOpen: false });
+     formatItemCountText = (count: number) => {
+          return `${count} item${count > 1 ? 's' : ''}`;
+     };
+
+     onCartClick = () => {
+          this.setState((prev) => ({ isOverlayOpen: !prev.isOverlayOpen }));
      };
 
      render() {
@@ -230,95 +166,50 @@ class CartOverlay extends Component<Props, State> {
 
           return (
                <>
-                    <StyledDiv
-                         onClick={() => this.setState({ isOverlayOpen: true })}
-                         id="cart_overlay"
-                    >
-                         <CartIcon />
-                         {!!totalQuantity && (
-                              <div className="indicator">{totalQuantity}</div>
-                         )}
+                    <StyledDiv id="cart_overlay">
+                         <button className="cart_btn" onClick={this.onCartClick}>
+                              <CartIcon />
+                              {!!totalQuantity && (
+                                   <div className="indicator">{totalQuantity}</div>
+                              )}
+                         </button>
                          {isOverlayOpen && (
                               <div className="cart_dropdown">
-                                   <h3 className="item_count">
-                                        my bag,
-                                        <span>
-                                             {this.formatItemCountText(cart.length)}
-                                        </span>
-                                   </h3>
+                                   {cart.length ? (
+                                        <>
+                                             <h3 className="item_count">
+                                                  my bag,
+                                                  <span>
+                                                       {this.formatItemCountText(
+                                                            totalQuantity
+                                                       )}
+                                                  </span>
+                                             </h3>
 
-                                   <ul className="cart_list">
-                                        {cart.map((product, index) => {
-                                             const currentPrice = getPrice(
-                                                  product.prices,
-                                                  currency.symbol
-                                             );
-                                             return (
-                                                  <li
-                                                       className="cart_item"
-                                                       key={`${product.id}-${index}`}
-                                                  >
-                                                       <div className="cart_left">
-                                                            <h4 className="brand">
-                                                                 {product.brand}
-                                                            </h4>
-                                                            <h5 className="name">
-                                                                 {product.name}
-                                                            </h5>
-                                                            <h6 className="price">
-                                                                 {
-                                                                      currentPrice
-                                                                           ?.currency
-                                                                           .symbol
-                                                                 }{' '}
-                                                                 {currentPrice?.amount}
-                                                            </h6>
-                                                            <Attribute
-                                                                 attribute={
-                                                                      product
-                                                                           .attributes[0]
-                                                                 }
-                                                                 isSelected={this.isSelected(
-                                                                      product
-                                                                 )}
-                                                            />
-                                                       </div>
-                                                       <div className="cart_right">
-                                                            <QuantityCTL
-                                                                 product={product}
-                                                            />
-                                                            <img
-                                                                 className="cart_img"
-                                                                 src={product.gallery[0]}
-                                                                 alt="product"
-                                                            />
-                                                       </div>
-                                                  </li>
-                                             );
-                                        })}
-                                   </ul>
-                                   <div className="total_price">
-                                        <span>total </span>
-                                        <span>
-                                             {currency.symbol}
-                                             {totalPrice?.toFixed(2)}
-                                        </span>
-                                   </div>
-                                   <div className="cart_actions">
-                                        <Link to="/cart">
-                                             <button
-                                                  onClick={this.onPageTransition}
-                                                  className="view_cart cart_actions_btn"
-                                             >
-                                                  view cart
-                                             </button>
-                                        </Link>
-                                        <Link to="/">
-                                             <button className="checkout cart_actions_btn">
-                                                  checkout
-                                             </button>
-                                        </Link>
-                                   </div>
+                                             <CartDropdownList />
+                                             <div className="total_price">
+                                                  <span>total </span>
+                                                  <span>
+                                                       {currency.symbol}
+                                                       {totalPrice?.toFixed(2)}
+                                                  </span>
+                                             </div>
+                                             <div className="cart_actions">
+                                                  <Link to="/cart">
+                                                       <button className="view_cart cart_actions_btn">
+                                                            view bag
+                                                       </button>
+                                                  </Link>
+                                                  <Link to="/">
+                                                       <button className="checkout cart_actions_btn">
+                                                            checkout
+                                                       </button>
+                                                  </Link>
+                                             </div>
+                                        </>
+                                   ) : (
+                                        <h1 className="empty_cart_msg">Cart is empty</h1>
+                                   )}
                               </div>
                          )}
                     </StyledDiv>
@@ -338,4 +229,6 @@ const mapStateToProps = (state: rootState) => ({
      currency: state.currency,
 });
 
-export default connect(mapStateToProps)(CartOverlay);
+const WrappedRouterComponent = withRouter(CartOverlay);
+
+export default connect(mapStateToProps)(WrappedRouterComponent);

@@ -28,7 +28,7 @@ export interface AttributeSet {
      items: Attribute[];
 }
 
-interface Category {
+export interface Category {
      name: string;
      products: Product[];
 }

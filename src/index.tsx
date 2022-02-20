@@ -7,7 +7,8 @@ import App from './App';
 import GlobalStyles, { theme } from './GlobalStyles';
 import apolloClient from './graphql/client';
 import reportWebVitals from './reportWebVitals';
-import store from './store';
+import { store, persistor } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.render(
      <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.render(
                <Provider store={store}>
                     <GlobalStyles />
                     <ThemeProvider theme={theme}>
-                         <App />
+                         <PersistGate loading={null} persistor={persistor}>
+                              <App />
+                         </PersistGate>
                     </ThemeProvider>
                </Provider>
           </ApolloProvider>

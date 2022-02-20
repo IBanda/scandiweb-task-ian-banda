@@ -67,7 +67,7 @@ const StyledDiv = styled.div`
                & > div {
                     display: flex;
                     justify-content: space-between;
-                    height: 181px;
+                    height: 164px;
                }
           }
           &_item_right {
@@ -76,7 +76,7 @@ const StyledDiv = styled.div`
                top: 0;
                .product_img {
                     width: 141px;
-                    height: 185px;
+                    height: 162px;
                     object-fit: contain;
                }
           }

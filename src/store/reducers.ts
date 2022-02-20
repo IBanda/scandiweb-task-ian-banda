@@ -1,7 +1,7 @@
 import type { AnyAction } from 'redux';
 import actionTypes from './actionTypes';
 import { SelectedProduct } from '../utils/interfaces';
-import isSameVariant from '../utils/isSameVariant';
+import { isSameVariant } from '../utils';
 
 const initialState: SelectedProduct[] = [];
 

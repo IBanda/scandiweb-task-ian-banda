@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Attribute from '../components/Attribute';
 import { Modal } from '../components/Modal';
-import getPrice from '../utils/getPrice';
+import { getPrice } from '../utils';
 import { Currency, SelectedProduct } from '../utils/interfaces';
 import QuantityCTL from '../components/QuantityCTL';
 import { Link } from 'react-router-dom';

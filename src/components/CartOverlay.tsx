@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import getPrice from '../utils/getPrice';
+import { getPrice } from '../utils';
 import { Currency, SelectedProduct } from '../utils/interfaces';
 import { CartIcon } from './Icon';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';

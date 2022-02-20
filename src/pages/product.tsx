@@ -7,8 +7,7 @@ import { GET_PRODUCT } from '../graphql/queries';
 import { Attribute as Attr, Currency, Product, Variant } from '../utils/interfaces';
 import { addToCart } from '../store/actions';
 import Attribute from '../components/Attribute';
-import getPrice from '../utils/getPrice';
-import getSelectedVariant from '../utils/getSelectedVariant';
+import { getPrice, getSelectedVariant } from '../utils';
 import { Loader } from '../components/Loader';
 
 const StyledDiv = styled.div`

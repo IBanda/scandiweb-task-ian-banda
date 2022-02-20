@@ -4,9 +4,8 @@ import { Currency, Product, Variant } from '../utils/interfaces';
 import { connect } from 'react-redux';
 import { CartIcon } from './Icon';
 import { Link } from 'react-router-dom';
-import getPrice from '../utils/getPrice';
+import { getPrice, getSelectedVariant } from '../utils';
 import { addToCart } from '../store/actions';
-import getSelectedVariant from '../utils/getSelectedVariant';
 
 const StyledDiv = styled.div`
      .product {

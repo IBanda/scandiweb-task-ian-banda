@@ -7,8 +7,10 @@ import Nav from './Nav';
 
 const StyledHeader = styled.header`
      background-color: #fff;
-     position: relative;
+     position: sticky;
+     top: 0;
      z-index: 5;
+
      .container {
           display: flex;
           align-items: center;

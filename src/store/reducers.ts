@@ -5,7 +5,7 @@ import { isSameVariant } from '../utils';
 
 const initialState: SelectedProduct[] = [];
 
-function productPredicate(productA: SelectedProduct, productB: SelectedProduct) {
+function isProduct(productA: SelectedProduct, productB: SelectedProduct) {
      return (
           productA.id === productB.id && isSameVariant(productA.variant, productB.variant)
      );
@@ -28,10 +28,10 @@ function cartReducer(state = initialState, action: AnyAction) {
           case actionTypes.updateCart: {
                const { product, quantity } = action.payload;
                if (!quantity) {
-                    return [...state.filter((p) => !productPredicate(p, product))];
+                    return [...state.filter((p) => !isProduct(p, product))];
                }
 
-               const prdct = state.find((p) => productPredicate(p, product));
+               const prdct = state.find((p) => isProduct(p, product));
 
                if (prdct) {
                     prdct.quantity = quantity;
@@ -40,7 +40,7 @@ function cartReducer(state = initialState, action: AnyAction) {
           }
           case actionTypes.removeFromCart: {
                const { product } = action.payload;
-               return [...state.filter((p) => !productPredicate(p, product))];
+               return [...state.filter((p) => !isProduct(p, product))];
           }
           default:
                return state;

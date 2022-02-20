@@ -162,8 +162,8 @@ const mapStateToProps = (state: rootState) => ({
      currency: state.currency,
 });
 
-const ConnectedComponent = connect(mapStateToProps, { changeCurrency })(CurrencySwitcher);
+const WrappedGraphqlComponent = graphql<{}, Response, {}, childDataProps & Props>(
+     GET_CURRENCIES
+)(CurrencySwitcher);
 
-export default graphql<{}, Response, {}, childDataProps & Props>(GET_CURRENCIES)(
-     ConnectedComponent
-);
+export default connect(mapStateToProps, { changeCurrency })(WrappedGraphqlComponent);

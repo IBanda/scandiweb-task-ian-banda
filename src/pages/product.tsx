@@ -9,6 +9,7 @@ import { addToCart } from '../store/actions';
 import Attribute from '../components/Attribute';
 import getPrice from '../utils/getPrice';
 import getSelectedVariant from '../utils/getSelectedVariant';
+import { Loader } from '../components/Loader';
 
 const StyledDiv = styled.div`
      display: grid;
@@ -26,9 +27,13 @@ const StyledDiv = styled.div`
                /* grid-template-columns: 100px 1fr; */
                gap: 2em;
                position: sticky;
-               top: 0;
+               top: 62px;
                @media (max-width: 640px) {
                     flex-direction: column;
+               }
+               @media (max-width: 1024px) {
+                    position: relative;
+                    top: 0;
                }
 
                .thumbnail {
@@ -78,14 +83,14 @@ const StyledDiv = styled.div`
                }
                .sticky_details {
                     position: sticky;
-                    top: 0;
+                    top: 60px;
                     background-color: #fff;
                     padding-bottom: 0.5em;
                }
                .product {
                     &_brand,
                     &_name {
-                         font-size: 30px;
+                         font-size: 20px;
                     }
                     &_brand {
                          font-weight: 500;
@@ -108,39 +113,6 @@ const StyledDiv = styled.div`
                          .attr_box_container {
                               display: flex;
                               gap: 0.5em;
-                         }
-                         .attr_box {
-                              height: 45px;
-                              width: 63px;
-                              border: 1px solid #1d1f22;
-                              font-size: 14px;
-                              text-align: center;
-                              font-family: 'Source Sans Pro', sans-serif;
-                              font-weight: 400;
-                              position: relative;
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              .attr_btn {
-                                   position: absolute;
-                                   top: 0;
-                                   left: 0;
-                                   margin: 0;
-                                   opacity: 0;
-                                   height: 100%;
-                                   width: 100%;
-                                   z-index: 1;
-                                   cursor: pointer;
-                              }
-                              &.selected {
-                                   background-color: #1d1f22;
-                                   color: #fff;
-                              }
-                              &.swatch_box.selected {
-                                   outline: 3px double #1d1f22;
-                                   border-color: transparent;
-                                   box-shadow: 0 0 0 0.1rem #ccc;
-                              }
                          }
                     }
                     &_price {
@@ -256,9 +228,12 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
 
      render() {
           const {
-               data: { product },
+               data: { product, loading },
                currency,
           } = this.props;
+
+          console.log(this.props.data.product);
+          if (loading) return <Loader />;
 
           const currentPrice = getPrice(product?.prices, currency.symbol);
           const { currentPreviewIndex } = this.state;
@@ -284,7 +259,7 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
                          <div className="product_main_img">
                               <img
                                    src={product?.gallery[currentPreviewIndex]}
-                                   alt=""
+                                   alt="product"
                                    className="product_img"
                               />
                          </div>

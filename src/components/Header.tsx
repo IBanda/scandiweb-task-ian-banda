@@ -17,6 +17,9 @@ const StyledHeader = styled.header`
           justify-content: space-between;
           height: 60px;
           margin-bottom: 4em;
+          .logo {
+               margin-left: -45px;
+          }
           .right-col {
                display: flex;
                align-items: center;
@@ -33,6 +36,7 @@ export default class Header extends Component {
                          <div>
                               <Link to="/">
                                    <img
+                                        className="logo"
                                         src="/logo.png"
                                         width={30}
                                         height={28}

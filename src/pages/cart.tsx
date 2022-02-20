@@ -7,6 +7,7 @@ import { getPrice } from '../utils';
 import { Currency, SelectedProduct } from '../utils/interfaces';
 import QuantityCTL from '../components/QuantityCTL';
 import { Link } from 'react-router-dom';
+import { removeFromCart } from '../store/actions';
 
 const StyledDiv = styled.div`
      height: calc(100% - 4em - 80px);
@@ -38,7 +39,7 @@ const StyledDiv = styled.div`
                }
                .name {
                     font-weight: 300;
-                    margin: 0 0 20px 0;
+                    margin: 0 10px 0 0;
                }
                .price {
                     font-weight: 600;
@@ -55,6 +56,18 @@ const StyledDiv = styled.div`
                     border: none;
                     text-transform: capitalize;
                     font-size: 12px;
+                    display: none;
+               }
+               .name_row {
+                    display: flex;
+                    align-items: center;
+                    button {
+                         display: none;
+                         background-color: transparent;
+                         border: none;
+                         text-transform: capitalize;
+                         color: ${(props) => props.theme.primary};
+                    }
                }
           }
           .empty_cart_msg {
@@ -64,10 +77,19 @@ const StyledDiv = styled.div`
           &_item {
                border-top: 1px solid #e5e5e5;
                padding: 1em 0;
+               cursor: pointer;
                & > div {
                     display: flex;
                     justify-content: space-between;
                     height: 164px;
+               }
+               &:hover {
+                    .show_more_btn {
+                         display: block;
+                    }
+                    .name_row > button {
+                         display: inline-block;
+                    }
                }
           }
           &_item_right {
@@ -116,6 +138,7 @@ const StyledAttrs = styled.div`
 type Props = {
      cart: SelectedProduct[];
      currency: Currency;
+     removeFromCart: Function;
 };
 
 type State = {
@@ -139,6 +162,10 @@ class CartPage extends Component<Props, State> {
                showModal: true,
                productForModal: prdct,
           });
+     };
+
+     onRemoveFromCart = (product: SelectedProduct) => {
+          this.props.removeFromCart(product);
      };
 
      render() {
@@ -165,13 +192,26 @@ class CartPage extends Component<Props, State> {
                                                             <h2 className="brand">
                                                                  {product.brand}
                                                             </h2>
-                                                            <h3 className="name">
-                                                                 <Link
-                                                                      to={`/product/${product.id}`}
+
+                                                            <div className="name_row">
+                                                                 <h3 className="name">
+                                                                      <Link
+                                                                           to={`/product/${product.id}`}
+                                                                      >
+                                                                           {product.name}
+                                                                      </Link>
+                                                                 </h3>
+                                                                 <button
+                                                                      onClick={() =>
+                                                                           this.onRemoveFromCart(
+                                                                                product
+                                                                           )
+                                                                      }
+                                                                      className="remove_btn"
                                                                  >
-                                                                      {product.name}
-                                                                 </Link>
-                                                            </h3>
+                                                                      remove
+                                                                 </button>
+                                                            </div>
                                                             <h4 className="price">
                                                                  {
                                                                       currentPrice
@@ -180,7 +220,6 @@ class CartPage extends Component<Props, State> {
                                                                  }
                                                                  {currentPrice?.amount}
                                                             </h4>
-
                                                             <div className="attr_container">
                                                                  <Attribute
                                                                       attribute={
@@ -281,4 +320,4 @@ const mapStateToProps = (state: rootState) => ({
      currency: state.currency,
 });
 
-export default connect(mapStateToProps)(CartPage);
+export default connect(mapStateToProps, { removeFromCart })(CartPage);

@@ -9,15 +9,17 @@ import QuantityCTL from '../components/QuantityCTL';
 import { Link } from 'react-router-dom';
 
 const StyledDiv = styled.div`
-     height: 100%;
+     height: calc(100% - 4em - 80px);
+     position: relative;
      .page_title {
           text-transform: uppercase;
-          font-size: 28px;
+          font-size: 24px;
           font-weight: 700;
           margin-bottom: 1em;
      }
      .cart {
-          height: 100%;
+          position: absolute;
+          max-height: 430px;
           overflow: auto;
           width: 80%;
           &_items {
@@ -28,7 +30,7 @@ const StyledDiv = styled.div`
           &_item_left {
                .brand,
                .name {
-                    font-size: 24px;
+                    font-size: 20px;
                }
                .brand {
                     font-weight: 500;
@@ -57,6 +59,7 @@ const StyledDiv = styled.div`
           }
           .empty_cart_msg {
                color: #8d8f9a;
+               font-size: 16px;
           }
           &_item {
                border-top: 1px solid #e5e5e5;
@@ -97,6 +100,7 @@ const StyledAttrs = styled.div`
                background-color: transparent;
                border: none;
                cursor: pointer;
+               margin-left: auto;
           }
           h1 {
                font-size: 20px;
@@ -222,7 +226,10 @@ class CartPage extends Component<Props, State> {
                                    })}
                               </ul>
                          ) : (
-                              <h2 className="empty_cart_msg">Cart is Empty</h2>
+                              <>
+                                   <h2 className="empty_cart_msg">Cart is Empty</h2>
+                                   <Link to="/">Go to shop</Link>
+                              </>
                          )}
                     </div>
                     {showModal ? (

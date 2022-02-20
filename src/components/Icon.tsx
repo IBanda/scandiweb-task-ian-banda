@@ -59,3 +59,41 @@ export class CartIcon extends Component {
           );
      }
 }
+
+export class CarretRightIcon extends Component {
+     render() {
+          return (
+               <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#8899a4"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+               >
+                    <path d="M9 18l6-6-6-6"></path>
+               </svg>
+          );
+     }
+}
+
+export class CarretLeftIcon extends Component {
+     render() {
+          return (
+               <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#8899a4"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+               >
+                    <path d="M15 18l-6-6 6-6"></path>
+               </svg>
+          );
+     }
+}

@@ -195,9 +195,16 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
 
      componentDidUpdate(prevProps: childDataProps) {
           if (prevProps.data.product?.id != this.props.data.product?.id) {
-               const { product } = this.props.data;
                this.setState({
-                    selectedVariant: getSelectedVariant(product),
+                    selectedVariant: getSelectedVariant(this.props.data.product),
+               });
+          }
+     }
+
+     componentDidMount() {
+          if (this.props.data.product) {
+               this.setState({
+                    selectedVariant: getSelectedVariant(this.props.data.product),
                });
           }
      }
@@ -237,7 +244,7 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
           if (error) {
                return <GraphqlErrorAlert error={error} />;
           }
-
+          console.log(this.state.selectedVariant);
           const currentPrice = getPrice(product?.prices, currency.symbol);
           const { currentPreviewIndex } = this.state;
           return (

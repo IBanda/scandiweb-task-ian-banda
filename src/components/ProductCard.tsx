@@ -143,13 +143,19 @@ class ProductCard extends Component<Props, State> {
                product: { id, name, inStock, prices, gallery, brand },
                currency,
           } = this.props;
+
           const currentPrice = getPrice(prices, currency.symbol);
           return (
                <StyledDiv className="product_card">
                     <Link className="product_link" to={`/product/${id}`}>
                          <div className="product_card_body">
                               <div className={`product_card_img `}>
-                                   <img src={gallery[0]} alt="product" />
+                                   <img
+                                        src={gallery[0]}
+                                        alt="product"
+                                        height={400}
+                                        width={356}
+                                   />
                                    <div
                                         className={`${inStock ? 'in_stock' : 'no_stock'}`}
                                    >

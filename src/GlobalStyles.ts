@@ -4,8 +4,11 @@ const GlobalStyles = createGlobalStyle`
     *{
         box-sizing: border-box;
     }
-
+    html,#root{
+        min-height: 100%;
+    }
     body{
+        min-height: 100%;
         font-family: Raleway, sans-serif;
         margin: 0;
     }
@@ -13,6 +16,7 @@ const GlobalStyles = createGlobalStyle`
     .container{
         padding: 1em;
         width: 100%;
+       
         @media (max-width:1536px){
             max-width: 1536px;
             padding: 0 6rem;

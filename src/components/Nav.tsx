@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { changeCategory } from '../store/actions';
 import type { Theme } from '../GlobalStyles';
+import { graphql, ChildDataProps } from '@apollo/client/react/hoc';
+import { GET_CATEGORIES } from '../graphql/queries';
+import { Category } from '../utils/interfaces';
 
 const StyledNav = styled('nav')<{ theme: Theme }>`
      height: 100%;
@@ -39,29 +42,37 @@ const StyledNav = styled('nav')<{ theme: Theme }>`
      }
 `;
 
-const categories = ['all', 'clothes', 'tech'];
-
 type Props = {
      changeCategory: Function;
      category: string;
 };
 
-class Nav extends Component<Props> {
+type Response = {
+     categories: Category[];
+};
+type childDataProps = ChildDataProps<{}, Response, {}>;
+
+class Nav extends Component<Props & childDataProps> {
      render() {
-          const { category: selectedCategory, changeCategory: onCategoryChange } =
-               this.props;
+          const {
+               category: selectedCategory,
+               changeCategory: onCategoryChange,
+               data: { categories },
+          } = this.props;
           return (
                <StyledNav>
                     <ul>
-                         {categories.map((category) => (
-                              <li key={category}>
+                         {categories?.map((category) => (
+                              <li key={category.name}>
                                    <button
-                                        onClick={() => onCategoryChange(category)}
+                                        onClick={() => onCategoryChange(category.name)}
                                         className={`${
-                                             selectedCategory === category ? 'active' : ''
+                                             selectedCategory === category.name
+                                                  ? 'active'
+                                                  : ''
                                         }`}
                                    >
-                                        {category}
+                                        {category.name}
                                    </button>
                               </li>
                          ))}
@@ -79,4 +90,7 @@ const mapStateToProps = (state: RootState) => ({
      category: state.category,
 });
 
-export default connect(mapStateToProps, { changeCategory })(Nav);
+const WrappedGraphqlComponent = graphql<{}, Response, {}, childDataProps & Props>(
+     GET_CATEGORIES
+)(Nav);
+export default connect(mapStateToProps, { changeCategory })(WrappedGraphqlComponent);

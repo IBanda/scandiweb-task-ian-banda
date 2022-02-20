@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Attribute from '../components/Attribute';
 import { Modal } from '../components/Modal';
-import { getPrice } from '../utils';
 import { Currency, SelectedProduct } from '../utils/interfaces';
-import QuantityCTL from '../components/QuantityCTL';
 import { Link } from 'react-router-dom';
 import { removeFromCart } from '../store/actions';
+import CartItem from '../components/CartItem';
 
 const StyledDiv = styled.div`
      height: calc(100% - 4em - 80px);
@@ -23,84 +22,14 @@ const StyledDiv = styled.div`
           max-height: 430px;
           overflow: auto;
           width: 80%;
-          &_items {
-               margin: 0;
-               padding: 0;
-               list-style: none;
-          }
-          &_item_left {
-               .brand,
-               .name {
-                    font-size: 20px;
-               }
-               .brand {
-                    font-weight: 500;
-                    margin: 0 0 10px 0;
-               }
-               .name {
-                    font-weight: 300;
-                    margin: 0 10px 0 0;
-               }
-               .price {
-                    font-weight: 600;
-                    font-size: 16px;
-                    margin: 20px 0 20px 0;
-               }
-               .attr_container {
-                    margin-bottom: 1em;
-                    display: flex;
-                    align-items: flex-end;
-               }
-               .show_more_btn {
-                    background-color: transparent;
-                    border: none;
-                    text-transform: capitalize;
-                    font-size: 12px;
-                    display: none;
-               }
-               .name_row {
-                    display: flex;
-                    align-items: center;
-                    button {
-                         display: none;
-                         background-color: transparent;
-                         border: none;
-                         text-transform: capitalize;
-                         color: ${(props) => props.theme.primary};
-                    }
-               }
-          }
           .empty_cart_msg {
                color: #8d8f9a;
                font-size: 16px;
           }
-          &_item {
-               border-top: 1px solid #e5e5e5;
-               padding: 1em 0;
-               cursor: pointer;
-               & > div {
-                    display: flex;
-                    justify-content: space-between;
-                    height: 164px;
-               }
-               &:hover {
-                    .show_more_btn {
-                         display: block;
-                    }
-                    .name_row > button {
-                         display: inline-block;
-                    }
-               }
-          }
-          &_item_right {
-               display: flex;
-               position: sticky;
-               top: 0;
-               .product_img {
-                    width: 141px;
-                    height: 162px;
-                    object-fit: contain;
-               }
+          &_items {
+               list-style: none;
+               padding: 0;
+               margin: 0;
           }
      }
 `;
@@ -169,7 +98,7 @@ class CartPage extends Component<Props, State> {
      };
 
      render() {
-          const { cart, currency } = this.props;
+          const { cart } = this.props;
           const { showModal, productForModal } = this.state;
           return (
                <StyledDiv>
@@ -177,92 +106,13 @@ class CartPage extends Component<Props, State> {
                     <div className="cart">
                          {cart.length ? (
                               <ul className="cart_items">
-                                   {cart.map((product, index) => {
-                                        const currentPrice = getPrice(
-                                             product.prices,
-                                             currency.symbol
-                                        );
-                                        return (
-                                             <li
-                                                  key={`${product.id}-${index}`}
-                                                  className="cart_item"
-                                             >
-                                                  <div>
-                                                       <div className="cart_item_left">
-                                                            <h2 className="brand">
-                                                                 {product.brand}
-                                                            </h2>
-
-                                                            <div className="name_row">
-                                                                 <h3 className="name">
-                                                                      <Link
-                                                                           to={`/product/${product.id}`}
-                                                                      >
-                                                                           {product.name}
-                                                                      </Link>
-                                                                 </h3>
-                                                                 <button
-                                                                      onClick={() =>
-                                                                           this.onRemoveFromCart(
-                                                                                product
-                                                                           )
-                                                                      }
-                                                                      className="remove_btn"
-                                                                 >
-                                                                      remove
-                                                                 </button>
-                                                            </div>
-                                                            <h4 className="price">
-                                                                 {
-                                                                      currentPrice
-                                                                           ?.currency
-                                                                           .symbol
-                                                                 }
-                                                                 {currentPrice?.amount}
-                                                            </h4>
-                                                            <div className="attr_container">
-                                                                 <Attribute
-                                                                      attribute={
-                                                                           product
-                                                                                .attributes[0]
-                                                                      }
-                                                                      onChange={() => {}}
-                                                                      isSelected={this.isSelected(
-                                                                           product
-                                                                      )}
-                                                                 />
-                                                                 {product.attributes
-                                                                      .length &&
-                                                                 product.attributes
-                                                                      .length > 1 ? (
-                                                                      <button
-                                                                           className="show_more_btn"
-                                                                           onClick={() =>
-                                                                                this.onModalOpen(
-                                                                                     product
-                                                                                )
-                                                                           }
-                                                                      >
-                                                                           Show all
-                                                                           attributes
-                                                                      </button>
-                                                                 ) : null}
-                                                            </div>
-                                                       </div>
-                                                       <div className="cart_item_right">
-                                                            <QuantityCTL
-                                                                 product={product}
-                                                            />
-                                                            <img
-                                                                 className="product_img"
-                                                                 src={product.gallery[0]}
-                                                                 alt="product"
-                                                            />
-                                                       </div>
-                                                  </div>
-                                             </li>
-                                        );
-                                   })}
+                                   {cart.map((product, index) => (
+                                        <CartItem
+                                             key={`${product.id}-${index}`}
+                                             onModalOpen={this.onModalOpen}
+                                             product={product}
+                                        />
+                                   ))}
                               </ul>
                          ) : (
                               <>

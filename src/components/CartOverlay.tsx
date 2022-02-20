@@ -167,10 +167,16 @@ class CartOverlay extends Component<Props & RouteComponentProps, State> {
           return (
                <>
                     <StyledDiv id="cart_overlay">
-                         <button className="cart_btn" onClick={this.onCartClick}>
+                         <button
+                              data-testid="cart_overlay_btn"
+                              className="cart_btn"
+                              onClick={this.onCartClick}
+                         >
                               <CartIcon />
                               {!!totalQuantity && (
-                                   <div className="indicator">{totalQuantity}</div>
+                                   <div data-testid="indicator" className="indicator">
+                                        {totalQuantity}
+                                   </div>
                               )}
                          </button>
                          {isOverlayOpen && (

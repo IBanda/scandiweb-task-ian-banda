@@ -114,6 +114,7 @@ class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boole
           return (
                <StyledDiv id="currency_dropdown">
                     <button
+                         data-testid="currency_btn"
                          className="currency_dropdown_btn"
                          onClick={() =>
                               this.setState((prev) => ({
@@ -134,6 +135,7 @@ class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boole
                                         role="option"
                                    >
                                         <button
+                                             data-testid="currency_item_btn"
                                              onClick={() =>
                                                   onChangeCurrency(currencyItem)
                                              }

@@ -99,11 +99,20 @@ class CartDropdownList extends Component<Props> {
                               currency?.symbol as string
                          );
                          return (
-                              <li className="cart_item" key={`${product.id}-${index}`}>
+                              <li
+                                   data-testid="cart_list_item"
+                                   className="cart_item"
+                                   key={`${product.id}-${index}`}
+                              >
                                    <div className="cart_left">
                                         <h4 className="brand">{product.brand}</h4>
                                         <Link to={`/product/${product.id}`}>
-                                             <h5 className="name">{product.name}</h5>
+                                             <h5
+                                                  data-testid="cart_list-product_name"
+                                                  className="name"
+                                             >
+                                                  {product.name}
+                                             </h5>
                                         </Link>
                                         <h6 className="price">
                                              {currentPrice?.currency.symbol}{' '}

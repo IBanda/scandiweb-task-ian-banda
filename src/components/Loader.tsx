@@ -33,6 +33,10 @@ const StyledLoader = styled.div`
 
 export class Loader extends Component {
      render() {
-          return <StyledLoader className="loader">Loading...</StyledLoader>;
+          return (
+               <StyledLoader data-testid="loader" className="loader">
+                    Loading...
+               </StyledLoader>
+          );
      }
 }

@@ -18,7 +18,7 @@ const StyledHeader = styled.header`
           height: 60px;
           margin-bottom: 4em;
           .logo {
-               margin-left: -45px;
+               margin-left: -52px;
           }
           .right-col {
                display: flex;

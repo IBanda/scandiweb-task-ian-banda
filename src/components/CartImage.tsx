@@ -14,17 +14,12 @@ const StyledDiv = styled.div`
           border: none;
           position: absolute;
           top: 50%;
-          display: none;
+
           transform: translateY(-50%);
           &.btn {
                &_next {
                     right: 0;
                }
-          }
-     }
-     &:hover {
-          button {
-               display: block;
           }
      }
 `;

@@ -92,11 +92,11 @@ const StyledDiv = styled.div`
                          font-size: 20px;
                     }
                     &_brand {
-                         font-weight: 500;
+                         font-weight: 600;
                          margin-bottom: 10px;
                     }
                     &_name {
-                         font-weight: 300;
+                         font-weight: 400;
                          margin: 0;
                          margin-bottom: 1em;
                     }

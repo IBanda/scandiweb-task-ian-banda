@@ -1,11 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import App from '../App';
-import { load } from '../utils/testUtils';
+import TestApp from '../utils/test_utils/TestApp';
+import { load, renderWithRouter } from '../utils/test_utils/testUtils';
 
 test('Cart quantity indicator should show total quantity', async () => {
-     render(<App />, { wrapper: MemoryRouter });
+     renderWithRouter(<TestApp />);
      await load();
      const addToCartBtn = screen.getByTestId('add_to_cart');
      userEvent.click(addToCartBtn);

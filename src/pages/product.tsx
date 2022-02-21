@@ -261,6 +261,7 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
                                         className="thumbnail"
                                         role={'button'}
                                         tabIndex={0}
+                                        data-testid="thumbnail"
                                         onClick={() =>
                                              this.setState({ currentPreviewIndex: index })
                                         }
@@ -272,6 +273,7 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
                               <img
                                    src={product?.gallery[currentPreviewIndex]}
                                    alt="product"
+                                   data-testid="main_img"
                                    className="product_img"
                               />
                          </div>

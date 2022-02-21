@@ -185,7 +185,7 @@ class CartOverlay extends Component<Props & RouteComponentProps, State> {
                                         <>
                                              <h3 className="item_count">
                                                   my bag,
-                                                  <span>
+                                                  <span data-testid="item_count">
                                                        {this.formatItemCountText(
                                                             totalQuantity
                                                        )}

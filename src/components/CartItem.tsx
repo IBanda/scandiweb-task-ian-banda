@@ -93,10 +93,14 @@ class CartItem extends Component<Props> {
           const { product, currency } = this.props;
           const currentPrice = getPrice(product.prices, currency?.symbol as string);
           return (
-               <StyledListItem className="cart_item">
+               <StyledListItem data-testid="cart_item" className="cart_item">
                     <div>
                          <div className="cart_item_left">
-                              <h2 className="brand">{product.brand}</h2>
+                              <h2 className="brand">
+                                   <Link to={`/product/${product.id}`}>
+                                        {product.brand}
+                                   </Link>
+                              </h2>
 
                               <div className="name_row">
                                    <h3 className="name">

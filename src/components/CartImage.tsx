@@ -54,6 +54,7 @@ export default class CartItemImage extends Component<Props, State> {
                <StyledDiv className="img_wrapper">
                     {hasMultipleImgs && (
                          <button
+                              data-testid="btn_prev"
                               onClick={this.onPrevImage}
                               disabled={currentImgIndex === 0}
                               className="btn_prev"
@@ -65,12 +66,14 @@ export default class CartItemImage extends Component<Props, State> {
                          className="product_img"
                          src={gallery[currentImgIndex]}
                          alt="product"
+                         data-testid="cart_thumbnail"
                     />
                     {hasMultipleImgs && (
                          <button
                               onClick={this.onNextImage}
                               disabled={currentImgIndex === gallery.length - 1}
                               className="btn_next"
+                              data-testid="btn_next"
                          >
                               <CarretRightIcon />
                          </button>

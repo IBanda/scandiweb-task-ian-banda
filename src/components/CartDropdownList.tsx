@@ -100,15 +100,19 @@ class CartDropdownList extends Component<Props> {
                                    key={`${product.id}-${index}`}
                               >
                                    <div className="cart_left">
-                                        <h4 className="brand">{product.brand}</h4>
-                                        <Link to={`/product/${product.id}`}>
-                                             <h5
-                                                  data-testid="cart_list-product_name"
-                                                  className="name"
-                                             >
+                                        <h4 className="brand">
+                                             <Link to={`/product/${product.id}`}>
+                                                  {product.brand}
+                                             </Link>
+                                        </h4>
+                                        <h5
+                                             data-testid="cart_list-product_name"
+                                             className="name"
+                                        >
+                                             <Link to={`/product/${product.id}`}>
                                                   {product.name}
-                                             </h5>
-                                        </Link>
+                                             </Link>
+                                        </h5>
                                         <h6 className="price">
                                              {currentPrice?.currency.symbol}{' '}
                                              {currentPrice?.amount}

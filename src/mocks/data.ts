@@ -5,6 +5,7 @@ export const products = [
           id: 'huarache-x-stussy-le',
           name: 'Nike Air Huarache Le',
           inStock: true,
+          description: '<p>Great sneakers for everyday use!</p>',
           brand: 'Nike x Stussy',
           category: 'clothes',
           gallery: [
@@ -18,12 +19,14 @@ export const products = [
                {
                     currency: {
                          symbol: '$',
+                         label: 'USD',
                     },
                     amount: 144.69,
                },
                {
                     currency: {
                          symbol: '£',
+                         label: 'GBP',
                     },
                     amount: 104,
                },
@@ -62,6 +65,7 @@ export const products = [
           id: 'ps-5',
           name: 'PlayStation 5',
           inStock: false,
+          description: '<p>Awesome winter jacket</p>',
           brand: 'Sony',
           category: 'tech',
           gallery: [
@@ -75,12 +79,14 @@ export const products = [
                {
                     currency: {
                          symbol: '$',
+                         label: 'USD',
                     },
                     amount: 844.02,
                },
                {
                     currency: {
                          symbol: '£',
+                         label: 'GBP',
                     },
                     amount: 606.67,
                },

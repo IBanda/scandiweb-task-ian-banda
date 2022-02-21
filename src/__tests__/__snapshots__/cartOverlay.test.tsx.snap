@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Added product should show in cart overlay 1`] = `
+<ul
+  class="sc-hKwDye cJMKyJ cart_list"
+  data-testid="cart_list"
+>
+  <li
+    class="cart_item"
+    data-testid="cart_list_item"
+  >
+    <div
+      class="cart_left"
+    >
+      <h4
+        class="brand"
+      >
+        <a
+          href="/product/huarache-x-stussy-le"
+        >
+          Nike x Stussy
+        </a>
+      </h4>
+      <h5
+        class="name"
+        data-testid="cart_list-product_name"
+      >
+        <a
+          href="/product/huarache-x-stussy-le"
+        >
+          Nike Air Huarache Le
+        </a>
+      </h5>
+      <h6
+        class="price"
+      >
+        $
+         
+        144.69
+      </h6>
+      <div
+        class="sc-gsDKAQ kBWjMo attr_box_container"
+      >
+        <div
+          class="attr_box 
+                                                       selected
+                                                       "
+          data-testid="Size-0"
+        >
+          <input
+            class="attr_btn"
+            name="Size"
+            type="radio"
+            value="40"
+          />
+          <span
+            class="attr_text"
+          >
+            40
+          </span>
+        </div>
+        <div
+          class="attr_box 
+                                                       
+                                                       "
+          data-testid="Size-1"
+        >
+          <input
+            class="attr_btn"
+            name="Size"
+            type="radio"
+            value="41"
+          />
+          <span
+            class="attr_text"
+          >
+            41
+          </span>
+        </div>
+        <div
+          class="attr_box 
+                                                       
+                                                       "
+          data-testid="Size-2"
+        >
+          <input
+            class="attr_btn"
+            name="Size"
+            type="radio"
+            value="42"
+          />
+          <span
+            class="attr_text"
+          >
+            42
+          </span>
+        </div>
+        <div
+          class="attr_box 
+                                                       
+                                                       "
+          data-testid="Size-3"
+        >
+          <input
+            class="attr_btn"
+            name="Size"
+            type="radio"
+            value="43"
+          />
+          <span
+            class="attr_text"
+          >
+            43
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cart_right"
+    >
+      <div
+        class="sc-dkPtRN dzPSCc quantity"
+      >
+        <button
+          data-testid="btn_inc"
+        >
+          ＋
+        </button>
+        <span
+          class="quantity_text"
+          data-testid="quantity"
+        >
+          1
+        </span>
+        <button
+          class="dd"
+          data-testid="btn_dec"
+        >
+          —
+        </button>
+      </div>
+      <img
+        alt="product"
+        class="cart_img"
+        src="https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087"
+      />
+    </div>
+  </li>
+</ul>
+`;

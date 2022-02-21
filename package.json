@@ -60,6 +60,7 @@
           "@types/styled-components": "^5.1.22",
           "eslint-config-kentcdodds": "^20.0.1",
           "husky": "^7.0.4",
+          "jest-localstorage-mock": "^2.4.19",
           "lint-staged": "^12.3.3",
           "msw": "^0.38.1",
           "prettier": "^2.5.1"

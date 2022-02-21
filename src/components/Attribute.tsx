@@ -79,9 +79,10 @@ export default class Attribute extends Component<Props, State> {
           const isSwatch = attribute?.type === 'swatch';
           return (
                <StyledDiv className="attr_box_container">
-                    {attribute?.items.map((item) => (
+                    {attribute?.items.map((item, index) => (
                          <div
                               key={item.id}
+                              data-testid={`${attribute.name}-${index}`}
                               className={`attr_box ${
                                    attribute.type === 'swatch' ? 'swatch_box' : ''
                               }

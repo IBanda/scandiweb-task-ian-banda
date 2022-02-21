@@ -46,10 +46,21 @@ class QuantityCTL extends Component<Props> {
           const { product } = this.props;
           return (
                <StyledDiv className="quantity">
-                    <button onClick={() => this.onCartUpdate('INC')}>&#xff0b;</button>
-                    <span className="quantity_text">{product.quantity}</span>
+                    <button
+                         data-testid="btn_inc"
+                         onClick={() => this.onCartUpdate('INC')}
+                    >
+                         &#xff0b;
+                    </button>
+                    <span data-testid="quantity" className="quantity_text">
+                         {product.quantity}
+                    </span>
 
-                    <button className="dd" onClick={() => this.onCartUpdate('DEC')}>
+                    <button
+                         data-testid="btn_dec"
+                         className="dd"
+                         onClick={() => this.onCartUpdate('DEC')}
+                    >
                          &mdash;
                     </button>
                </StyledDiv>

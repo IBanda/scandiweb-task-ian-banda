@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import App from '../App';
-import { load } from '../utils/testUtils';
+import TestApp from '../utils/test_utils/TestApp';
+import { load } from '../utils/test_utils/testUtils';
 
 beforeEach(() => {
-     render(<App />, { wrapper: MemoryRouter });
+     render(<TestApp />, { wrapper: MemoryRouter });
 });
 
 test('Should not have add to cart button', async () => {

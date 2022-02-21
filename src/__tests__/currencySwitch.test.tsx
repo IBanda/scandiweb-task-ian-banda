@@ -1,15 +1,10 @@
-import { ApolloProvider } from '@apollo/client';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import App from '../App';
-import apolloClient from '../graphql/client';
-import { store } from '../store';
+import { screen } from '@testing-library/react';
+import TestApp from '../utils/test_utils/TestApp';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { load } from '../utils/testUtils';
+import { load, renderWithRouter } from '../utils/test_utils/testUtils';
 
 beforeEach(() => {
-     render(<App />, { wrapper: MemoryRouter });
+     renderWithRouter(<TestApp />);
 });
 
 test('Clicking currency switcher should show dropdown', async () => {

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import { AttributeSet } from '../utils/interfaces';
 
@@ -47,9 +47,35 @@ type Props = {
      onChange?: Function;
 };
 
-export default class Attribute extends Component<Props> {
+type State = {
+     attrName: string;
+     attr: Attribute;
+     value: string;
+};
+
+export default class Attribute extends Component<Props, State> {
+     state = {
+          attrName: '',
+          attr: {} as Attribute,
+          value: '',
+     };
+
+     componentDidUpdate(_: unknown, prevState: State) {
+          const { attrName, attr } = this.state;
+          if (prevState.value != this.state.value) {
+               this.props.onChange?.(attrName, attr);
+          }
+     }
+
+     onInputChange = (
+          e: SyntheticEvent<HTMLInputElement>,
+          attrName: string,
+          attr: Attribute
+     ) => {
+          this.setState({ value: (e.target as HTMLInputElement).value, attrName, attr });
+     };
      render() {
-          const { attribute, isSelected, onChange } = this.props;
+          const { attribute, isSelected } = this.props;
           const isSwatch = attribute?.type === 'swatch';
           return (
                <StyledDiv className="attr_box_container">
@@ -76,9 +102,18 @@ export default class Attribute extends Component<Props> {
                                         : null),
                               }}
                          >
-                              <button
+                              <input
+                                   type={'radio'}
+                                   value={item.value}
+                                   name={attribute.name}
+                                   onChange={(e) =>
+                                        this.onInputChange(
+                                             e,
+                                             attribute.name,
+                                             item as unknown as Attribute
+                                        )
+                                   }
                                    className="attr_btn"
-                                   onClick={() => onChange?.(attribute.name, item)}
                               />
                               {isSwatch ? null : (
                                    <span className="attr_text">{item.displayValue}</span>

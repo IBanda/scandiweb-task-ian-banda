@@ -26,7 +26,7 @@ export class Modal extends Component {
 
      render() {
           return createPortal(
-               <StyledModal>{this.props.children}</StyledModal>,
+               <StyledModal role="dialog">{this.props.children}</StyledModal>,
                this.element
           );
      }

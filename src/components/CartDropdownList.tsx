@@ -87,7 +87,7 @@ class CartDropdownList extends Component<Props> {
      render() {
           const { cart, currency } = this.props;
           return (
-               <StyledList className="cart_list">
+               <StyledList className="cart_list" data-testid="cart_list">
                     {cart?.map((product, index) => {
                          const currentPrice = getPrice(
                               product.prices,

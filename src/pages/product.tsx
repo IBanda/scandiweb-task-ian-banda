@@ -24,7 +24,6 @@ const StyledDiv = styled.div`
                height: 550px;
                overflow: hidden;
                display: flex;
-               /* grid-template-columns: 100px 1fr; */
                gap: 2em;
                position: sticky;
                top: 62px;
@@ -172,7 +171,7 @@ type Variables = {
 };
 
 type Response = {
-     product: Product;
+     product: Product | null;
 };
 
 type childDataProps = ChildDataProps<InputProp, Response, Variables>;
@@ -194,7 +193,10 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
      };
 
      componentDidUpdate(prevProps: childDataProps) {
-          if (prevProps.data.product?.id != this.props.data.product?.id) {
+          if (
+               this.props.data.product &&
+               prevProps.data.product?.id != this.props.data.product?.id
+          ) {
                this.setState({
                     selectedVariant: getSelectedVariant(this.props.data.product),
                });
@@ -244,10 +246,10 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
           if (error) {
                return <GraphqlErrorAlert error={error} />;
           }
-          console.log(this.state.selectedVariant);
+
           const currentPrice = getPrice(product?.prices, currency.symbol);
           const { currentPreviewIndex } = this.state;
-          return (
+          return product ? (
                <StyledDiv>
                     <div className="product_imgs">
                          <div className="product_thumbnails">
@@ -311,11 +313,15 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
                          <div
                               className="product_description"
                               dangerouslySetInnerHTML={{
-                                   __html: product?.description as string,
+                                   __html: product?.description,
                               }}
                          />
                     </div>
                </StyledDiv>
+          ) : (
+               <div>
+                    <h1>Product not found</h1>
+               </div>
           );
      }
 }

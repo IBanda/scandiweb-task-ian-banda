@@ -18,7 +18,11 @@ const StyledDiv = styled.div`
           display: flex;
           align-items: center;
           justify-content: center;
-          .attr_btn {
+          &:hover {
+               color: #a6a6a6;
+               border: 1px solid #a6a6a6;
+          }
+          .attr_input {
                position: absolute;
                top: 0;
                left: 0;
@@ -33,10 +37,26 @@ const StyledDiv = styled.div`
                background-color: #1d1f22;
                color: #fff;
           }
+          &.swatch_box,
+          &.selected {
+               &:hover {
+                    border: 1px solid #1d1f22;
+               }
+          }
           &.swatch_box.selected {
-               outline: 3px double #1d1f22;
+               /* outline: 3px double #1d1f22;
                border-color: transparent;
-               box-shadow: 0 0 0 0.1rem #ccc;
+               box-shadow: 0 0 0 0.1rem #ccc; */
+               &:before {
+                    content: '';
+                    position: absolute;
+                    top: -3px;
+                    bottom: -3px;
+                    right: -3px;
+                    left: -3px;
+                    border: 1px solid #a6a6a6;
+                    /* border: 1px solid transparent; */
+               }
           }
      }
 `;
@@ -114,7 +134,7 @@ export default class Attribute extends Component<Props, State> {
                                              item as unknown as Attribute
                                         )
                                    }
-                                   className="attr_btn"
+                                   className="attr_input"
                               />
                               {isSwatch ? null : (
                                    <span className="attr_text">{item.displayValue}</span>

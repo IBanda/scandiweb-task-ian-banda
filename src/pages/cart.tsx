@@ -22,7 +22,7 @@ const StyledDiv = styled.div`
           position: absolute;
           max-height: 430px;
           overflow: auto;
-          width: 80%;
+          width: 87%;
           .empty_cart_msg {
                color: #8d8f9a;
                font-size: 16px;

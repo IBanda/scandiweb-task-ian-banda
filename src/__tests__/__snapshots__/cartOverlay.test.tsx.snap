@@ -2,7 +2,7 @@
 
 exports[`Added product should show in cart overlay 1`] = `
 <ul
-  class="sc-hKwDye cJMKyJ cart_list"
+  class="sc-hKwDye iHwXuf cart_list"
   data-testid="cart_list"
 >
   <li
@@ -39,7 +39,7 @@ exports[`Added product should show in cart overlay 1`] = `
         144.69
       </h6>
       <div
-        class="sc-gsDKAQ kBWjMo attr_box_container"
+        class="sc-gsDKAQ htcSMN attr_box_container"
       >
         <div
           class="attr_box 
@@ -48,7 +48,7 @@ exports[`Added product should show in cart overlay 1`] = `
           data-testid="Size-0"
         >
           <input
-            class="attr_btn"
+            class="attr_input"
             name="Size"
             type="radio"
             value="40"
@@ -66,7 +66,7 @@ exports[`Added product should show in cart overlay 1`] = `
           data-testid="Size-1"
         >
           <input
-            class="attr_btn"
+            class="attr_input"
             name="Size"
             type="radio"
             value="41"
@@ -84,7 +84,7 @@ exports[`Added product should show in cart overlay 1`] = `
           data-testid="Size-2"
         >
           <input
-            class="attr_btn"
+            class="attr_input"
             name="Size"
             type="radio"
             value="42"
@@ -102,7 +102,7 @@ exports[`Added product should show in cart overlay 1`] = `
           data-testid="Size-3"
         >
           <input
-            class="attr_btn"
+            class="attr_input"
             name="Size"
             type="radio"
             value="43"

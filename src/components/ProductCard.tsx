@@ -14,7 +14,7 @@ const StyledDiv = styled.div`
           }
           &_link {
                text-decoration: none;
-               color: #000;
+               color: #1d1f22;
           }
           &_card_body {
                width: 386px;
@@ -59,6 +59,7 @@ const StyledDiv = styled.div`
                     width: 100%;
                     height: 100%;
                }
+
                @media (max-width: 1024px) {
                     width: 100%;
                }
@@ -79,6 +80,9 @@ const StyledDiv = styled.div`
                }
                h4 {
                     font-weight: 500;
+               }
+               &.text_gray {
+                    color: #8d8f9a;
                }
                .btn_add_to_cart {
                     width: 52px;
@@ -159,7 +163,11 @@ class ProductCard extends Component<Props, State> {
                                         <div className="no_stock">out of stock</div>
                                    )}
                               </div>
-                              <div className="product_detail">
+                              <div
+                                   className={`product_detail ${
+                                        inStock ? '' : 'text_gray'
+                                   }`}
+                              >
                                    {inStock ? (
                                         <button
                                              data-testid="add_to_cart"

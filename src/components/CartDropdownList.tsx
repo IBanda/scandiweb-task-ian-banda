@@ -17,7 +17,7 @@ const StyledList = styled.ul`
           list-style: none;
           margin: 0;
           padding: 0;
-          max-height: 250px;
+          max-height: 320px;
           overflow-y: auto;
           .cart_item {
                display: flex;

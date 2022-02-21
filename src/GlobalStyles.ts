@@ -11,6 +11,7 @@ const GlobalStyles = createGlobalStyle`
         min-height: 100%;
         font-family: Raleway, sans-serif;
         margin: 0;
+        color: #1d1f22;
     }
  
     .container{
@@ -45,7 +46,8 @@ const GlobalStyles = createGlobalStyle`
 
     a{
         text-decoration: none;
-        color:#000;
+        color: #1d1f22;
+        
     }
 
 `;

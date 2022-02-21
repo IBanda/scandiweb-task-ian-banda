@@ -54,6 +54,7 @@ const StyledList = styled.ul`
                          &.selected {
                               background-color: #eeeeee;
                               color: #a6a6a6;
+                              border-color: #a6a6a6;
                          }
                          .attr_text {
                               font-size: 10px;

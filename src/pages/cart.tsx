@@ -140,7 +140,6 @@ class CartPage extends Component<Props, State> {
                                                   </h3>
                                                   <Attribute
                                                        attribute={attr}
-                                                       onChange={() => {}}
                                                        isSelected={isAttributedSelected(
                                                             productForModal
                                                        )}

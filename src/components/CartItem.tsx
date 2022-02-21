@@ -118,7 +118,6 @@ class CartItem extends Component<Props> {
                               <div className="attr_container">
                                    <Attribute
                                         attribute={product.attributes[0]}
-                                        onChange={() => {}}
                                         isSelected={isAttributedSelected(product)}
                                    />
                                    {product.attributes.length &&

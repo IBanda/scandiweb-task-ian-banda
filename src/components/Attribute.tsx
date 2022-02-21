@@ -44,9 +44,6 @@ const StyledDiv = styled.div`
                }
           }
           &.swatch_box.selected {
-               /* outline: 3px double #1d1f22;
-               border-color: transparent;
-               box-shadow: 0 0 0 0.1rem #ccc; */
                &:before {
                     content: '';
                     position: absolute;

@@ -2,7 +2,6 @@ const actionTypes = {
      addToCart: 'ADD_TO_CART',
      updateCart: 'UPDATE_CART',
      removeFromCart: 'REMOVE_FROM_CART',
-     changeCategory: 'CHANGE_CATEGORY',
      changeCurrency: 'CHANGE_CURRENCY',
 };
 

@@ -23,13 +23,6 @@ export const removeFromCart = (product: SelectedProduct) => ({
      },
 });
 
-export const changeCategory = (category: string) => ({
-     type: actionTypes.changeCategory,
-     payload: {
-          category,
-     },
-});
-
 export const changeCurrency = (currency: Currency) => ({
      type: actionTypes.changeCurrency,
      payload: {

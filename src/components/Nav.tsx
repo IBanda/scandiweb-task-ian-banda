@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { changeCategory } from '../store/actions';
 import type { Theme } from '../GlobalStyles';
 import { graphql, ChildDataProps } from '@apollo/client/react/hoc';
 import { GET_CATEGORIES } from '../graphql/queries';
@@ -44,7 +43,6 @@ const StyledNav = styled('nav')<{ theme: Theme }>`
 `;
 
 type Props = {
-     changeCategory: Function;
      category: string;
 };
 
@@ -82,9 +80,6 @@ class Nav extends Component<Props & childDataProps & RouteComponentProps> {
                                                        ? 'active'
                                                        : ''
                                              }`}
-                                             onClick={() =>
-                                                  this.props.changeCategory(category.name)
-                                             }
                                         >
                                              {category.name}
                                         </button>
@@ -106,9 +101,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const WrappedRouterComponent = withRouter(Nav);
-const WrappedReduxComponent = connect(mapStateToProps, { changeCategory })(
-     WrappedRouterComponent
-);
+const WrappedReduxComponent = connect(mapStateToProps)(WrappedRouterComponent);
 export default graphql<{}, Response, {}, childDataProps & Props>(GET_CATEGORIES)(
      WrappedReduxComponent
 );

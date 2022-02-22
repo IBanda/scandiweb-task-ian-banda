@@ -50,15 +50,9 @@ const StyledListItem = styled.li`
                .attr_container {
                     margin-bottom: 1em;
                     display: flex;
-                    align-items: flex-end;
+                    gap: 0.5em;
                }
-               .show_more_btn {
-                    background-color: transparent;
-                    border: none;
-                    text-transform: capitalize;
-                    font-size: 12px;
-                    display: none;
-               }
+
                .name_row {
                     display: flex;
                     align-items: center;
@@ -120,21 +114,13 @@ class CartItem extends Component<Props> {
                                    {currentPrice?.amount}
                               </h4>
                               <div className="attr_container">
-                                   <Attribute
-                                        attribute={product.attributes[0]}
-                                        isSelected={isAttributedSelected(product)}
-                                   />
-                                   {product.attributes.length &&
-                                   product.attributes.length > 1 ? (
-                                        <button
-                                             className="show_more_btn"
-                                             onClick={() =>
-                                                  this.props.onModalOpen?.(product)
-                                             }
-                                        >
-                                             Show all attributes
-                                        </button>
-                                   ) : null}
+                                   {product.attributes.map((attr) => (
+                                        <Attribute
+                                             key={attr.id}
+                                             attribute={attr}
+                                             isSelected={isAttributedSelected(product)}
+                                        />
+                                   ))}
                               </div>
                          </div>
                          <div className="cart_item_right">

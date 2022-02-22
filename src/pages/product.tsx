@@ -10,6 +10,7 @@ import Attribute from '../components/Attribute';
 import { getPrice, getSelectedVariant } from '../utils';
 import { Loader } from '../components/Loader';
 import GraphqlErrorAlert from '../components/GraphqlErrorAlert';
+import parse from 'html-react-parser';
 
 const StyledDiv = styled.div`
      display: grid;
@@ -312,12 +313,9 @@ class ProductPage extends Component<childDataProps & Props & RouteComponentProps
                                    <h4 className="out_of_stock_msg">out of stock</h4>
                               )}
                          </div>
-                         <div
-                              className="product_description"
-                              dangerouslySetInnerHTML={{
-                                   __html: product?.description,
-                              }}
-                         />
+                         <div className="product_description">
+                              {parse(product.description)}
+                         </div>
                     </div>
                </StyledDiv>
           ) : (

@@ -50,9 +50,10 @@ const StyledDiv = styled.div`
                     }
                }
                .product_img {
+                    text-align: center;
                     width: 100%;
                     height: 100%;
-                    object-fit: cover;
+                    object-fit: contain;
                }
           }
           &_thumbnails {

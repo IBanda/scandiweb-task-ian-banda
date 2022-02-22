@@ -6,6 +6,7 @@ import type { Theme } from '../GlobalStyles';
 import { graphql, ChildDataProps } from '@apollo/client/react/hoc';
 import { GET_CATEGORIES } from '../graphql/queries';
 import { Category } from '../utils/interfaces';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 const StyledNav = styled('nav')<{ theme: Theme }>`
      height: 100%;
@@ -52,28 +53,42 @@ type Response = {
 };
 type childDataProps = ChildDataProps<{}, Response, {}>;
 
-class Nav extends Component<Props & childDataProps> {
+class Nav extends Component<Props & childDataProps & RouteComponentProps> {
      render() {
           const {
-               category: selectedCategory,
-               changeCategory: onCategoryChange,
                data: { categories },
           } = this.props;
+          const params = new URLSearchParams(this.props.location.search);
+          const selectedCategory = params.get('cat');
+
           return (
                <StyledNav>
                     <ul>
-                         {categories?.map((category) => (
+                         {categories?.map((category, index) => (
                               <li key={category.name}>
-                                   <button
-                                        onClick={() => onCategoryChange(category.name)}
-                                        className={`${
-                                             selectedCategory === category.name
-                                                  ? 'active'
-                                                  : ''
+                                   <Link
+                                        to={`${
+                                             index === 0 ? '' : `/?cat=${category.name}`
                                         }`}
                                    >
-                                        {category.name}
-                                   </button>
+                                        <button
+                                             className={`${
+                                                  selectedCategory
+                                                       ? selectedCategory ===
+                                                         category.name
+                                                            ? 'active'
+                                                            : ''
+                                                       : index === 0
+                                                       ? 'active'
+                                                       : ''
+                                             }`}
+                                             onClick={() =>
+                                                  this.props.changeCategory(category.name)
+                                             }
+                                        >
+                                             {category.name}
+                                        </button>
+                                   </Link>
                               </li>
                          ))}
                     </ul>
@@ -90,7 +105,10 @@ const mapStateToProps = (state: RootState) => ({
      category: state.category,
 });
 
-const WrappedGraphqlComponent = graphql<{}, Response, {}, childDataProps & Props>(
-     GET_CATEGORIES
-)(Nav);
-export default connect(mapStateToProps, { changeCategory })(WrappedGraphqlComponent);
+const WrappedRouterComponent = withRouter(Nav);
+const WrappedReduxComponent = connect(mapStateToProps, { changeCategory })(
+     WrappedRouterComponent
+);
+export default graphql<{}, Response, {}, childDataProps & Props>(GET_CATEGORIES)(
+     WrappedReduxComponent
+);

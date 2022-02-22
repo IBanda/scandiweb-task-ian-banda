@@ -7,6 +7,7 @@ import { GET_CATEGORY } from '../graphql/queries';
 import ProductCard from '../components/ProductCard';
 import { Loader } from '../components/Loader';
 import GraphqlErrorAlert from '../components/GraphqlErrorAlert';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const StyledDiv = styled.div`
      h1.category_title {
@@ -69,15 +70,20 @@ type State = {
      page: number;
 };
 
-class CategoryPage extends Component<childDateProps & Props, State> {
+class CategoryPage extends Component<
+     childDateProps & Props & RouteComponentProps,
+     State
+> {
      state = {
           page: 1,
      };
-     componentDidUpdate(prevProps: Props) {
-          if (prevProps.category != this.props.category) {
+     componentDidUpdate(prevProps: RouteComponentProps) {
+          const cat = new URLSearchParams(this.props.location.search).get('cat');
+          const prevCat = new URLSearchParams(prevProps.location.search).get('cat');
+          if (cat !== prevCat) {
                this.props.data.refetch({
                     input: {
-                         title: this.props.category,
+                         title: cat ?? '',
                     },
                });
                this.setState({ page: 1 });
@@ -85,7 +91,6 @@ class CategoryPage extends Component<childDateProps & Props, State> {
      }
      render() {
           const {
-               category,
                data: { category: categoryData, loading, error },
           } = this.props;
 
@@ -93,6 +98,8 @@ class CategoryPage extends Component<childDateProps & Props, State> {
 
           if (error) return <GraphqlErrorAlert error={error} />;
 
+          const category =
+               new URLSearchParams(this.props.location.search).get('cat') ?? 'all';
           const products = categoryData?.products;
           const pageSize = 6;
           const pages = products ? Math.ceil(products.length / pageSize) : 0;
@@ -157,19 +164,23 @@ const mapStateToProps = (state: rootState) => ({
      category: state.category,
 });
 
-const WrappedGraphqlComponent = graphql<
-     InputProps & Props,
+const WrappedRouterComponent = withRouter(CategoryPage);
+const WrappedReduxComponent = connect(mapStateToProps)(WrappedRouterComponent);
+
+export default graphql<
+     InputProps & Props & RouteComponentProps,
      Response,
      Variables,
      childDateProps
 >(GET_CATEGORY, {
-     options: (props) => ({
-          variables: {
-               input: {
-                    title: props.category,
+     options: (props) => {
+          return {
+               variables: {
+                    input: {
+                         title:
+                              new URLSearchParams(props.location.search).get('cat') ?? '',
+                    },
                },
-          },
-     }),
-})(CategoryPage);
-
-export default connect(mapStateToProps)(WrappedGraphqlComponent);
+          };
+     },
+})(WrappedReduxComponent);

@@ -41,6 +41,14 @@ const StyledDiv = styled.div`
                font-size: 13px;
                padding: 0.1em 1.5em;
                width: 100%;
+               &:hover {
+                    background-color: ${(props) => props.theme.primary};
+                    color: #fff;
+               }
+               &.selected {
+                    background-color: #e2e0e0;
+                    color: #000;
+               }
           }
      }
      ul.dropdown_list {
@@ -139,7 +147,11 @@ class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boole
                                              onClick={() =>
                                                   onChangeCurrency(currencyItem)
                                              }
-                                             className="listitem_btn"
+                                             className={`listitem_btn ${
+                                                  currencyItem.label === currency.label
+                                                       ? 'selected'
+                                                       : ''
+                                             }`}
                                         >
                                              <div className="currency_symbol">
                                                   {currencyItem.symbol}

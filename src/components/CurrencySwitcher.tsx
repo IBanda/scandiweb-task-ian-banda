@@ -105,6 +105,11 @@ class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boole
           }
      };
 
+     onCurrencySelect = (currencyItem: Currency) => {
+          this.props.changeCurrency(currencyItem);
+          this.setState({ isOpen: false });
+     };
+
      componentDidMount() {
           window.addEventListener('click', this.onClick);
      }
@@ -117,7 +122,6 @@ class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boole
           const {
                data: { currencies },
                currency,
-               changeCurrency: onChangeCurrency,
           } = this.props;
           return (
                <StyledDiv id="currency_dropdown">
@@ -145,7 +149,7 @@ class CurrencySwitcher extends Component<childDataProps & Props, { isOpen: boole
                                         <button
                                              data-testid="currency_item_btn"
                                              onClick={() =>
-                                                  onChangeCurrency(currencyItem)
+                                                  this.onCurrencySelect(currencyItem)
                                              }
                                              className={`listitem_btn ${
                                                   currencyItem.label === currency.label

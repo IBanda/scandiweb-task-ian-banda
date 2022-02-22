@@ -20,8 +20,6 @@ const StyledDiv = styled.div`
      }
      .cart {
           position: absolute;
-          max-height: 430px;
-          overflow: auto;
           width: 87%;
           .empty_cart_msg {
                color: #8d8f9a;

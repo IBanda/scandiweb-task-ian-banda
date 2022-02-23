@@ -44,7 +44,7 @@ const StyledDiv = styled.div`
      }
      .cart_dropdown {
           background-color: #fff;
-          width: 375px;
+          width: 450px;
 
           padding: 1em;
           position: absolute;
@@ -73,9 +73,11 @@ const StyledDiv = styled.div`
           .cart_actions {
                margin-top: 2em;
                display: flex;
+
                gap: 1em;
                a {
                     text-decoration: none;
+                    width: 100%;
                }
                &_btn {
                     height: 43px;
@@ -84,7 +86,7 @@ const StyledDiv = styled.div`
                     font-size: 14px;
                     font-weight: 600;
                     text-transform: uppercase;
-                    width: 164px;
+                    width: 100%;
                     &.checkout {
                          background-color: ${(props) => props.theme.primary};
                          color: #fff;

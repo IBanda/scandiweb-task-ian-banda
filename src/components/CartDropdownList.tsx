@@ -45,9 +45,13 @@ const StyledList = styled.ul`
                          font-weight: 600;
                          margin-bottom: 22.5px;
                     }
+                    .cart_attrs {
+                         display: flex;
+                         gap: 1em;
+                    }
                     .attr_box {
-                         width: 33px;
-                         height: 33px;
+                         width: 30px;
+                         height: 30px;
                          background-color: #fff;
                          color: #000;
 
@@ -67,16 +71,16 @@ const StyledList = styled.ul`
                     display: flex;
                     .quantity {
                          button {
-                              width: 33px;
-                              height: 33px;
+                              width: 30px;
+                              height: 30px;
                          }
                          .quantity_text {
                               font-size: 14px;
                          }
                     }
                     .cart_img {
-                         width: 90px;
-                         height: 120px;
+                         width: 75px;
+                         height: 105px;
                          object-fit: contain;
                     }
                }
@@ -118,11 +122,17 @@ class CartDropdownList extends Component<Props> {
                                              {currentPrice?.currency.symbol}{' '}
                                              {currentPrice?.amount}
                                         </h6>
-
-                                        <Attribute
-                                             attribute={product.attributes[0]}
-                                             isSelected={isAttributedSelected(product)}
-                                        />
+                                        <div className="cart_attrs">
+                                             {product.attributes.map((attr) => (
+                                                  <Attribute
+                                                       key={attr.id}
+                                                       attribute={attr}
+                                                       isSelected={isAttributedSelected(
+                                                            product
+                                                       )}
+                                                  />
+                                             ))}
+                                        </div>
                                    </div>
                                    <div className="cart_right">
                                         <QuantityCTL product={product} />

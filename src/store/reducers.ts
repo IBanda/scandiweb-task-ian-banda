@@ -15,13 +15,11 @@ function cartReducer(state = initialState, action: AnyAction) {
      switch (action.type) {
           case actionTypes.addToCart: {
                const { selectedProduct } = action.payload;
-               const product = state.find((item) => item.id === selectedProduct.id);
+               const product = state.find((item) => isProduct(item, selectedProduct));
                if (!product) {
                     return [...state, action.payload.selectedProduct];
                }
-               if (!isSameVariant(product.variant, selectedProduct.variant)) {
-                    return [...state, action.payload.selectedProduct];
-               }
+
                product.quantity += 1;
                return [...state];
           }

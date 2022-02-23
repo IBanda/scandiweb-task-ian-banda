@@ -26,9 +26,11 @@ export const handlers = [
           const {
                input: { title },
           } = req.variables;
+          const name = title || 'all';
+
           return res(
                ctx.data({
-                    category: categories.find((cat) => cat.name === title),
+                    category: categories.find((cat) => cat.name === name),
                })
           );
      }),

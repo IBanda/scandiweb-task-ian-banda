@@ -2,7 +2,7 @@
 
 exports[`Added product should show in cart overlay 1`] = `
 <ul
-  class="sc-hKwDye iHwXuf cart_list"
+  class="sc-hKwDye dAkFal cart_list"
   data-testid="cart_list"
 >
   <li
@@ -39,79 +39,83 @@ exports[`Added product should show in cart overlay 1`] = `
         144.69
       </h6>
       <div
-        class="sc-gsDKAQ htcSMN attr_box_container"
+        class="cart_attrs"
       >
         <div
-          class="attr_box 
+          class="sc-gsDKAQ bZQxOQ attr_box_container"
+        >
+          <div
+            class="attr_box 
                                                        selected
                                                        "
-          data-testid="Size-0"
-        >
-          <input
-            class="attr_input"
-            name="Size"
-            type="radio"
-            value="40"
-          />
-          <span
-            class="attr_text"
+            data-testid="Size-0"
           >
-            40
-          </span>
-        </div>
-        <div
-          class="attr_box 
+            <input
+              class="attr_input"
+              name="Size"
+              type="radio"
+              value="40"
+            />
+            <span
+              class="attr_text"
+            >
+              40
+            </span>
+          </div>
+          <div
+            class="attr_box 
                                                        
                                                        "
-          data-testid="Size-1"
-        >
-          <input
-            class="attr_input"
-            name="Size"
-            type="radio"
-            value="41"
-          />
-          <span
-            class="attr_text"
+            data-testid="Size-1"
           >
-            41
-          </span>
-        </div>
-        <div
-          class="attr_box 
+            <input
+              class="attr_input"
+              name="Size"
+              type="radio"
+              value="41"
+            />
+            <span
+              class="attr_text"
+            >
+              41
+            </span>
+          </div>
+          <div
+            class="attr_box 
                                                        
                                                        "
-          data-testid="Size-2"
-        >
-          <input
-            class="attr_input"
-            name="Size"
-            type="radio"
-            value="42"
-          />
-          <span
-            class="attr_text"
+            data-testid="Size-2"
           >
-            42
-          </span>
-        </div>
-        <div
-          class="attr_box 
+            <input
+              class="attr_input"
+              name="Size"
+              type="radio"
+              value="42"
+            />
+            <span
+              class="attr_text"
+            >
+              42
+            </span>
+          </div>
+          <div
+            class="attr_box 
                                                        
                                                        "
-          data-testid="Size-3"
-        >
-          <input
-            class="attr_input"
-            name="Size"
-            type="radio"
-            value="43"
-          />
-          <span
-            class="attr_text"
+            data-testid="Size-3"
           >
-            43
-          </span>
+            <input
+              class="attr_input"
+              name="Size"
+              type="radio"
+              value="43"
+            />
+            <span
+              class="attr_text"
+            >
+              43
+            </span>
+          </div>
         </div>
       </div>
     </div>
